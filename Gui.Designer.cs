@@ -311,7 +311,7 @@
             this.cBoxForceGetTo.Size = new System.Drawing.Size(86, 17);
             this.cBoxForceGetTo.TabIndex = 32;
             this.cBoxForceGetTo.Text = "Force GetTo";
-            this.FormToolTip.SetToolTip(this.cBoxForceGetTo, "Forces GetTo regardless of distance check");
+            this.FormToolTip.SetToolTip(this.cBoxForceGetTo, "Forces LisbethTravel or GetTo regardless of distance check");
             this.cBoxForceGetTo.UseVisualStyleBackColor = true;
             // 
             // btnQuestStep
