@@ -106,14 +106,14 @@ namespace ProfileDevelopment
                 }
 
                 //refresh KeyItems
-                lbKeyItems.DataSource = InventoryManager.GetBagByInventoryBagId(InventoryBagId.KeyItems).FilledSlots;
+                lbKeyItems.DataSource = InventoryManager.GetBagByInventoryBagId(InventoryBagId.KeyItems).FilledSlots.OrderBy(s => s.Name);
                 lbKeyItems.DisplayMember = "Name";
                 lbKeyItems.ValueMember = "Name";
                 lbKeyItems.SelectedItem = null;
 
                 var theseBags = new InventoryBagId[] { InventoryBagId.Bag1, InventoryBagId.Bag2, InventoryBagId.Bag3, InventoryBagId.Bag4 };
                 // refresh InventoryItems
-                lbInventory.DataSource = InventoryManager.FilledSlots.Where(r => theseBags.Contains(r.BagId)).ToArray();
+                lbInventory.DataSource = InventoryManager.FilledSlots.Where(r => theseBags.Contains(r.BagId)).OrderBy(s => s.Name).ToArray();
                 lbInventory.DisplayMember = "Name";
                 lbInventory.ValueMember = "Name";
                 lbInventory.SelectedItem = null;
