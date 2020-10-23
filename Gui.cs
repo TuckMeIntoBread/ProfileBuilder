@@ -235,7 +235,7 @@ namespace ProfileDevelopment
     <If Condition=""not HasQuest({q.GlobalId}) and not IsQuestCompleted({q.GlobalId})"">" + "\n";
                     str += GetToString();
                     str += $@"      <If Condition=""IsQuestAcceptQualified({q.GlobalId})"">
-        <PickupQuest QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}""/>
+        <LLPickupQuest QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}""/>
       </If>
     </If>";
                     UpdatePosition();
@@ -258,7 +258,7 @@ namespace ProfileDevelopment
                 {
                     str = $@"    <If Condition=""GetQuestStep({q.GlobalId}) == 255"">" + "\n";
                     str += GetToString();
-                    str += $@"      <TurnIn{ItemIdString}QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}""/>
+                    str += $@"      <LLTurnIn{ItemIdString}QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}""/>
     </If>";
                     UpdatePosition();
                     await Output(str);
@@ -280,7 +280,7 @@ namespace ProfileDevelopment
                 {
                     str = $@"    <If Condition=""GetQuestStep({q.GlobalId}) == {q.Step}"">" + "\n";
                     str += GetToString();
-                    str += $@"      <TalkTo NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
+                    str += $@"      <LLTalkTo NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
     </If>";
                     UpdatePosition();
                     await Output(str);
@@ -321,7 +321,7 @@ namespace ProfileDevelopment
                 {
                     str = $@"    <If Condition=""GetQuestStep({q.GlobalId}) == {q.Step}"">" + "\n";
                     str += GetToString();
-                    str += $@"      <HandOver{ItemIdString}NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
+                    str += $@"      <LLHandOver{ItemIdString}NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
     </If>";
                     UpdatePosition();
                     await Output(str);
