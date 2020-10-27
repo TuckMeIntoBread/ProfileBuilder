@@ -352,6 +352,7 @@
             this.btnLisbethJSONEntrance.Size = new System.Drawing.Size(137, 23);
             this.btnLisbethJSONEntrance.TabIndex = 36;
             this.btnLisbethJSONEntrance.Text = "Lisbeth JSON Entrance";
+            this.FormToolTip.SetToolTip(this.btnLisbethJSONEntrance, "Be targetting the entrance, then click the button.");
             this.btnLisbethJSONEntrance.UseVisualStyleBackColor = true;
             this.btnLisbethJSONEntrance.Click += new System.EventHandler(this.BtnLisbethJSONEntranceTo_Click);
             // 
@@ -363,6 +364,7 @@
             this.btnLisbethJSONExit.Size = new System.Drawing.Size(137, 23);
             this.btnLisbethJSONExit.TabIndex = 37;
             this.btnLisbethJSONExit.Text = "Lisbeth JSON Exit";
+            this.FormToolTip.SetToolTip(this.btnLisbethJSONExit, "Be targetting the exit, then click the button.");
             this.btnLisbethJSONExit.UseVisualStyleBackColor = true;
             this.btnLisbethJSONExit.Click += new System.EventHandler(this.BtnLisbethJSONExitFrom_Click);
             // 
