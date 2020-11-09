@@ -565,6 +565,7 @@ namespace ProfileDevelopment
                     str += $@"{whitespace}""Zone"": {WorldManager.ZoneId}," + "\n";
                     str += $@"{whitespace}""CanTeleport"": {WorldManager.CanTeleport().ToString().ToLower()}," + "\n";
                     if (WorldManager.CanFly) str += $@"{whitespace}""CanFly"": true," + "\n";
+                    str = str.Remove(str.LastIndexOf(",", StringComparison.Ordinal), 1);
                     str += "  },\n";
                 }
 
