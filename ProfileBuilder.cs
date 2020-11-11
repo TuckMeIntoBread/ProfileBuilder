@@ -7,29 +7,11 @@ namespace ProfileDevelopment
 {
     public class ProfileBuilder : BotPlugin
     {
-        public override string Author
-        {
-            get
-            {
-                return "Mastahg, modified by Sodimm, further modified by TuckMeIntoBread";
-            }
-        }
+        public override string Author => "Mastahg, modified by Sodimm, further modified by TuckMeIntoBread";
 
-        public override Version Version
-        {
-            get
-            {
-                return new Version(1, 0, 0);
-            }
-        }
+        public override Version Version => new Version(1, 1, 0);
 
-        public override string Name
-        {
-            get
-            {
-                return "Profile Builder";
-            }
-        }
+        public override string Name => "Profile Builder";
 
         internal Thread _guiThread;
         internal Gui _guiForm;
@@ -60,21 +42,9 @@ namespace ProfileDevelopment
             ToggleGui();
         }
 
-        public override bool WantButton
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool WantButton => true;
 
-        public override string ButtonText
-        {
-            get
-            {
-                return "Toggle GUI";
-            }
-        }
+        public override string ButtonText => "Toggle GUI";
 
         private void CloseForm()
         {

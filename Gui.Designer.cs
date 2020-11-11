@@ -56,11 +56,11 @@
             this.cBoxLisbeth = new System.Windows.Forms.CheckBox();
             this.cBoxClipboard = new System.Windows.Forms.CheckBox();
             this.cBoxForceGetTo = new System.Windows.Forms.CheckBox();
+            this.btnLisbethJSONEntrance = new System.Windows.Forms.Button();
+            this.btnLisbethJSONExit = new System.Windows.Forms.Button();
             this.btnQuestStep = new System.Windows.Forms.Button();
             this.btnQuestStepGt0 = new System.Windows.Forms.Button();
             this.btnCloseIf = new System.Windows.Forms.Button();
-            this.btnLisbethJSONEntrance = new System.Windows.Forms.Button();
-            this.btnLisbethJSONExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cBoxActiveQuests
@@ -314,6 +314,28 @@
             this.FormToolTip.SetToolTip(this.cBoxForceGetTo, "Forces LisbethTravel or GetTo regardless of distance check");
             this.cBoxForceGetTo.UseVisualStyleBackColor = true;
             // 
+            // btnLisbethJSONEntrance
+            // 
+            this.btnLisbethJSONEntrance.Location = new System.Drawing.Point(290, 536);
+            this.btnLisbethJSONEntrance.Name = "btnLisbethJSONEntrance";
+            this.btnLisbethJSONEntrance.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnLisbethJSONEntrance.Size = new System.Drawing.Size(137, 23);
+            this.btnLisbethJSONEntrance.TabIndex = 36;
+            this.btnLisbethJSONEntrance.Text = "Lisbeth JSON Entrance";
+            this.btnLisbethJSONEntrance.UseVisualStyleBackColor = true;
+            this.btnLisbethJSONEntrance.Click += new System.EventHandler(this.BtnLisbethJSONEntranceTo_Click);
+            // 
+            // btnLisbethJSONExit
+            // 
+            this.btnLisbethJSONExit.Location = new System.Drawing.Point(290, 565);
+            this.btnLisbethJSONExit.Name = "btnLisbethJSONExit";
+            this.btnLisbethJSONExit.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnLisbethJSONExit.Size = new System.Drawing.Size(137, 23);
+            this.btnLisbethJSONExit.TabIndex = 37;
+            this.btnLisbethJSONExit.Text = "Lisbeth JSON Exit";
+            this.btnLisbethJSONExit.UseVisualStyleBackColor = true;
+            this.btnLisbethJSONExit.Click += new System.EventHandler(this.BtnLisbethJSONExitFrom_Click);
+            // 
             // btnQuestStep
             // 
             this.btnQuestStep.Location = new System.Drawing.Point(290, 682);
@@ -343,30 +365,6 @@
             this.btnCloseIf.Text = "</If>";
             this.btnCloseIf.UseVisualStyleBackColor = true;
             this.btnCloseIf.Click += new System.EventHandler(this.BtnCloseIf_Click);
-            // 
-            // btnLisbethJSONEntrance
-            // 
-            this.btnLisbethJSONEntrance.Location = new System.Drawing.Point(290, 536);
-            this.btnLisbethJSONEntrance.Name = "btnLisbethJSONEntrance";
-            this.btnLisbethJSONEntrance.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btnLisbethJSONEntrance.Size = new System.Drawing.Size(137, 23);
-            this.btnLisbethJSONEntrance.TabIndex = 36;
-            this.btnLisbethJSONEntrance.Text = "Lisbeth JSON Entrance";
-            this.FormToolTip.SetToolTip(this.btnLisbethJSONEntrance, "Be targetting the entrance, then click the button.");
-            this.btnLisbethJSONEntrance.UseVisualStyleBackColor = true;
-            this.btnLisbethJSONEntrance.Click += new System.EventHandler(this.BtnLisbethJSONEntranceTo_Click);
-            // 
-            // btnLisbethJSONExit
-            // 
-            this.btnLisbethJSONExit.Location = new System.Drawing.Point(290, 565);
-            this.btnLisbethJSONExit.Name = "btnLisbethJSONExit";
-            this.btnLisbethJSONExit.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btnLisbethJSONExit.Size = new System.Drawing.Size(137, 23);
-            this.btnLisbethJSONExit.TabIndex = 37;
-            this.btnLisbethJSONExit.Text = "Lisbeth JSON Exit";
-            this.FormToolTip.SetToolTip(this.btnLisbethJSONExit, "Be targetting the exit, then click the button.");
-            this.btnLisbethJSONExit.UseVisualStyleBackColor = true;
-            this.btnLisbethJSONExit.Click += new System.EventHandler(this.BtnLisbethJSONExitFrom_Click);
             // 
             // Gui
             // 

@@ -68,7 +68,7 @@ namespace Helpers
                 {
                     JournalAccept.Decline();
                 }
-
+                await Task.Delay(250);
                 await WaitUntil(() => InSmallTalk, timeout:waitTime);
             }
         }

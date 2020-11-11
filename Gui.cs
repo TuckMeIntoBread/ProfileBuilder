@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ff14bot.Behavior;
@@ -106,14 +105,14 @@ namespace ProfileDevelopment
                 }
 
                 //refresh KeyItems
-                lbKeyItems.DataSource = InventoryManager.GetBagByInventoryBagId(InventoryBagId.KeyItems).FilledSlots.OrderBy(s => s.Name);
+                lbKeyItems.DataSource = InventoryManager.GetBagByInventoryBagId(InventoryBagId.KeyItems).FilledSlots.OrderBy(s => s.Name).ToList();
                 lbKeyItems.DisplayMember = "Name";
                 lbKeyItems.ValueMember = "Name";
                 lbKeyItems.SelectedItem = null;
 
-                var theseBags = new InventoryBagId[] { InventoryBagId.Bag1, InventoryBagId.Bag2, InventoryBagId.Bag3, InventoryBagId.Bag4 };
+                var theseBags = new[] { InventoryBagId.Bag1, InventoryBagId.Bag2, InventoryBagId.Bag3, InventoryBagId.Bag4 };
                 // refresh InventoryItems
-                lbInventory.DataSource = InventoryManager.FilledSlots.Where(r => theseBags.Contains(r.BagId)).OrderBy(s => s.Name).ToArray();
+                lbInventory.DataSource = InventoryManager.FilledSlots.Where(r => theseBags.Contains(r.BagId)).OrderBy(s => s.Name).ToList();
                 lbInventory.DisplayMember = "Name";
                 lbInventory.ValueMember = "Name";
                 lbInventory.SelectedItem = null;
