@@ -56,6 +56,7 @@
             this.cBoxLisbeth = new System.Windows.Forms.CheckBox();
             this.cBoxClipboard = new System.Windows.Forms.CheckBox();
             this.cBoxForceGetTo = new System.Windows.Forms.CheckBox();
+            this.cBoxMoveTo = new System.Windows.Forms.CheckBox();
             this.btnLisbethJSONEntrance = new System.Windows.Forms.Button();
             this.btnLisbethJSONExit = new System.Windows.Forms.Button();
             this.btnQuestStep = new System.Windows.Forms.Button();
@@ -220,7 +221,9 @@
             this.btnUseObject.Size = new System.Drawing.Size(137, 23);
             this.btnUseObject.TabIndex = 24;
             this.btnUseObject.Text = "UseObject";
-            this.FormToolTip.SetToolTip(this.btnUseObject, "FlyTo location will be your current location, be sure to be in an appropriate pla" + "ce before pressing. Clears all saved GameObjects on execution. Assign Objects wi" + "th the Add GameObject button.");
+            this.FormToolTip.SetToolTip(this.btnUseObject, "FlyTo location will be your current location, be sure to be in an appropriate pla" +
+        "ce before pressing. Clears all saved GameObjects on execution. Assign Objects wi" +
+        "th the Add GameObject button.");
             this.btnUseObject.UseVisualStyleBackColor = true;
             this.btnUseObject.Click += new System.EventHandler(this.BtnUseObject_Click);
             // 
@@ -248,7 +251,7 @@
             // cBoxFlight
             // 
             this.cBoxFlight.AutoSize = true;
-            this.cBoxFlight.Location = new System.Drawing.Point(290, 767);
+            this.cBoxFlight.Location = new System.Drawing.Point(290, 739);
             this.cBoxFlight.Name = "cBoxFlight";
             this.cBoxFlight.Size = new System.Drawing.Size(96, 17);
             this.cBoxFlight.TabIndex = 27;
@@ -259,7 +262,7 @@
             // CheckBoxTopMost
             // 
             this.CheckBoxTopMost.AutoSize = true;
-            this.CheckBoxTopMost.Location = new System.Drawing.Point(290, 803);
+            this.CheckBoxTopMost.Location = new System.Drawing.Point(290, 805);
             this.CheckBoxTopMost.Name = "CheckBoxTopMost";
             this.CheckBoxTopMost.Size = new System.Drawing.Size(115, 17);
             this.CheckBoxTopMost.TabIndex = 28;
@@ -284,7 +287,7 @@
             this.cBoxLisbeth.AutoSize = true;
             this.cBoxLisbeth.Checked = true;
             this.cBoxLisbeth.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cBoxLisbeth.Location = new System.Drawing.Point(290, 749);
+            this.cBoxLisbeth.Location = new System.Drawing.Point(290, 717);
             this.cBoxLisbeth.Name = "cBoxLisbeth";
             this.cBoxLisbeth.Size = new System.Drawing.Size(96, 17);
             this.cBoxLisbeth.TabIndex = 30;
@@ -306,13 +309,24 @@
             // cBoxForceGetTo
             // 
             this.cBoxForceGetTo.AutoSize = true;
-            this.cBoxForceGetTo.Location = new System.Drawing.Point(290, 785);
+            this.cBoxForceGetTo.Location = new System.Drawing.Point(290, 761);
             this.cBoxForceGetTo.Name = "cBoxForceGetTo";
             this.cBoxForceGetTo.Size = new System.Drawing.Size(86, 17);
             this.cBoxForceGetTo.TabIndex = 32;
             this.cBoxForceGetTo.Text = "Force GetTo";
             this.FormToolTip.SetToolTip(this.cBoxForceGetTo, "Forces LisbethTravel or GetTo regardless of distance check");
             this.cBoxForceGetTo.UseVisualStyleBackColor = true;
+            // 
+            // cBoxMoveTo
+            // 
+            this.cBoxMoveTo.AutoSize = true;
+            this.cBoxMoveTo.Location = new System.Drawing.Point(290, 783);
+            this.cBoxMoveTo.Name = "cBoxMoveTo";
+            this.cBoxMoveTo.Size = new System.Drawing.Size(90, 17);
+            this.cBoxMoveTo.TabIndex = 38;
+            this.cBoxMoveTo.Text = "MoveTo Only";
+            this.FormToolTip.SetToolTip(this.cBoxMoveTo, "Uses only MoveTo tags for movement");
+            this.cBoxMoveTo.UseVisualStyleBackColor = true;
             // 
             // btnLisbethJSONEntrance
             // 
@@ -338,7 +352,7 @@
             // 
             // btnQuestStep
             // 
-            this.btnQuestStep.Location = new System.Drawing.Point(290, 682);
+            this.btnQuestStep.Location = new System.Drawing.Point(290, 657);
             this.btnQuestStep.Name = "btnQuestStep";
             this.btnQuestStep.Size = new System.Drawing.Size(137, 23);
             this.btnQuestStep.TabIndex = 33;
@@ -348,7 +362,7 @@
             // 
             // btnQuestStepGt0
             // 
-            this.btnQuestStepGt0.Location = new System.Drawing.Point(290, 653);
+            this.btnQuestStepGt0.Location = new System.Drawing.Point(290, 628);
             this.btnQuestStepGt0.Name = "btnQuestStepGt0";
             this.btnQuestStepGt0.Size = new System.Drawing.Size(137, 23);
             this.btnQuestStepGt0.TabIndex = 34;
@@ -358,7 +372,7 @@
             // 
             // btnCloseIf
             // 
-            this.btnCloseIf.Location = new System.Drawing.Point(290, 711);
+            this.btnCloseIf.Location = new System.Drawing.Point(290, 686);
             this.btnCloseIf.Name = "btnCloseIf";
             this.btnCloseIf.Size = new System.Drawing.Size(137, 23);
             this.btnCloseIf.TabIndex = 35;
@@ -371,6 +385,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(777, 832);
+            this.Controls.Add(this.cBoxMoveTo);
             this.Controls.Add(this.btnLisbethJSONExit);
             this.Controls.Add(this.btnLisbethJSONEntrance);
             this.Controls.Add(this.btnCloseIf);
@@ -406,7 +421,10 @@
             this.Load += new System.EventHandler(this.Gui_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
+
+        private System.Windows.Forms.CheckBox cBoxMoveTo;
 
         private System.Windows.Forms.Button btnLisbethJSONEntrance;
         private System.Windows.Forms.Button btnLisbethJSONExit;

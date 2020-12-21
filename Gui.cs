@@ -1,4 +1,4 @@
-using Clio.Utilities;
+﻿using Clio.Utilities;
 using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Managers;
@@ -155,6 +155,8 @@ namespace ProfileDevelopment
         public bool IsForceGetTo => cBoxForceGetTo.Checked;
 
         public bool IsFlightEnabled => cBoxFlight.Checked;
+
+        public bool MoveToOnly => cBoxMoveTo.Checked;
 
         public bool OutputClipboard => cBoxClipboard.Checked;
 
@@ -703,6 +705,10 @@ namespace ProfileDevelopment
                 {
                     if (_lastLocationId != WorldManager.ZoneId) dist = TeleportTo;
                     dist += $@"      <FlyTo XYZ=""{PlayerLocation}"" Land=""True""/>" + "\n";
+                }
+                else if (MoveToOnly)
+                {
+                    dist = $@"      <MoveTo XYZ=""{PlayerLocation}""/>" + "\n";
                 }
                 else
                 {
