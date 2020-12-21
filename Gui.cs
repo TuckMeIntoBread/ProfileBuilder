@@ -1,4 +1,4 @@
-﻿using Clio.Utilities;
+using Clio.Utilities;
 using ff14bot;
 using ff14bot.Enums;
 using ff14bot.Managers;
@@ -235,6 +235,7 @@ namespace ProfileDevelopment
                     str += GetToString();
                     str += $@"      <If Condition=""IsQuestAcceptQualified({q.GlobalId})"">
         <LLPickupQuest QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}""/>
+        <LLSmallTalk/>
       </If>
     </If>";
                     UpdatePosition();
@@ -258,6 +259,7 @@ namespace ProfileDevelopment
                     str = $@"    <If Condition=""GetQuestStep({q.GlobalId}) == 255"">" + "\n";
                     str += GetToString();
                     str += $@"      <LLTurnIn{ItemIdString}QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}""/>
+      <LLSmallTalk/>
     </If>";
                     UpdatePosition();
                     await Output(str);
