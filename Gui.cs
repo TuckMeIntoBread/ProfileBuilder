@@ -704,11 +704,11 @@ namespace ProfileDevelopment
                 else if (IsFlightEnabled && WorldManager.CanFly)
                 {
                     if (_lastLocationId != WorldManager.ZoneId) dist = TeleportTo;
-                    dist += $@"      <FlyTo XYZ=""{PlayerLocation}"" Land=""True""/>" + "\n";
+                    dist += $@"      <FlyTo XYZ=""{PlayerLocation}"" Land=""True""/> <!-- Zone: ""{WorldManager.ZoneId}"" -->" + "\n";
                 }
                 else if (MoveToOnly)
                 {
-                    dist = $@"      <MoveTo XYZ=""{PlayerLocation}""/>" + "\n";
+                    dist = $@"      <MoveTo XYZ=""{PlayerLocation}""/> <!-- Zone: ""{WorldManager.ZoneId}"" -->" + "\n";
                 }
                 else
                 {
