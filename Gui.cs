@@ -168,7 +168,9 @@ namespace ProfileDevelopment
 
         private static string TargetLocation => Core.Target.Location.ToString().Remove(0, 1).Remove(Core.Target.Location.ToString().Remove(0, 1).Length - 1, 1);
 
-        public static string Map => WorldManager.ZoneId.ToString();
+        public static string ZoneId => WorldManager.ZoneId.ToString();
+        
+        public static string SubZoneId => WorldManager.SubZoneId.ToString();
 
         public static string TeleportTo
         {
@@ -699,20 +701,20 @@ namespace ProfileDevelopment
             {
                 if (IsLisbethTravel)
                 {
-                    dist = $@"      <LisbethTravel Zone=""{WorldManager.ZoneId}"" Subzone=""{WorldManager.SubZoneId}"" Position=""{PlayerLocation}""/>" + "\n";
+                    dist = $@"      <LisbethTravel Zone=""{ZoneId}"" Subzone=""{SubZoneId}"" Position=""{PlayerLocation}""/> <!-- Area=""{LisbethArea}"" -->" + "\n";
                 }
                 else if (IsFlightEnabled && WorldManager.CanFly)
                 {
                     if (_lastLocationId != WorldManager.ZoneId) dist = TeleportTo;
-                    dist += $@"      <FlyTo XYZ=""{PlayerLocation}"" Land=""True""/> <!-- Zone: ""{WorldManager.ZoneId}"" -->" + "\n";
+                    dist += $@"      <FlyTo XYZ=""{PlayerLocation}"" Land=""True""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->" + "\n";
                 }
                 else if (MoveToOnly)
                 {
-                    dist = $@"      <MoveTo XYZ=""{PlayerLocation}""/> <!-- Zone: ""{WorldManager.ZoneId}"" -->" + "\n";
+                    dist = $@"      <MoveTo XYZ=""{PlayerLocation}""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->" + "\n";
                 }
                 else
                 {
-                    dist = $@"      <GetTo ZoneId=""{Map}"" XYZ=""{PlayerLocation}""/>" + "\n";
+                    dist = $@"      <GetTo ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}""/>  <!-- Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->" + "\n";
                 }
             }
             return dist;
