@@ -62,6 +62,7 @@
             this.btnQuestStep = new System.Windows.Forms.Button();
             this.btnQuestStepGt0 = new System.Windows.Forms.Button();
             this.btnCloseIf = new System.Windows.Forms.Button();
+            this.cBoxLisOptional = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // cBoxActiveQuests
@@ -221,9 +222,7 @@
             this.btnUseObject.Size = new System.Drawing.Size(137, 23);
             this.btnUseObject.TabIndex = 24;
             this.btnUseObject.Text = "UseObject";
-            this.FormToolTip.SetToolTip(this.btnUseObject, "FlyTo location will be your current location, be sure to be in an appropriate pla" +
-        "ce before pressing. Clears all saved GameObjects on execution. Assign Objects wi" +
-        "th the Add GameObject button.");
+            this.FormToolTip.SetToolTip(this.btnUseObject, "FlyTo location will be your current location, be sure to be in an appropriate pla" + "ce before pressing. Clears all saved GameObjects on execution. Assign Objects wi" + "th the Add GameObject button.");
             this.btnUseObject.UseVisualStyleBackColor = true;
             this.btnUseObject.Click += new System.EventHandler(this.BtnUseObject_Click);
             // 
@@ -251,18 +250,18 @@
             // cBoxFlight
             // 
             this.cBoxFlight.AutoSize = true;
-            this.cBoxFlight.Location = new System.Drawing.Point(290, 739);
+            this.cBoxFlight.Location = new System.Drawing.Point(281, 737);
             this.cBoxFlight.Name = "cBoxFlight";
-            this.cBoxFlight.Size = new System.Drawing.Size(96, 17);
+            this.cBoxFlight.Size = new System.Drawing.Size(90, 17);
             this.cBoxFlight.TabIndex = 27;
-            this.cBoxFlight.Text = "FlightEnabled?";
+            this.cBoxFlight.Text = "FlightEnabled";
             this.FormToolTip.SetToolTip(this.cBoxFlight, "Uses Flightor FlyTo Tags in preference to GetTo");
             this.cBoxFlight.UseVisualStyleBackColor = true;
             // 
             // CheckBoxTopMost
             // 
             this.CheckBoxTopMost.AutoSize = true;
-            this.CheckBoxTopMost.Location = new System.Drawing.Point(290, 805);
+            this.CheckBoxTopMost.Location = new System.Drawing.Point(281, 803);
             this.CheckBoxTopMost.Name = "CheckBoxTopMost";
             this.CheckBoxTopMost.Size = new System.Drawing.Size(115, 17);
             this.CheckBoxTopMost.TabIndex = 28;
@@ -287,11 +286,11 @@
             this.cBoxLisbeth.AutoSize = true;
             this.cBoxLisbeth.Checked = true;
             this.cBoxLisbeth.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cBoxLisbeth.Location = new System.Drawing.Point(290, 717);
+            this.cBoxLisbeth.Location = new System.Drawing.Point(281, 715);
             this.cBoxLisbeth.Name = "cBoxLisbeth";
-            this.cBoxLisbeth.Size = new System.Drawing.Size(96, 17);
+            this.cBoxLisbeth.Size = new System.Drawing.Size(90, 17);
             this.cBoxLisbeth.TabIndex = 30;
-            this.cBoxLisbeth.Text = "LisbethTravel?";
+            this.cBoxLisbeth.Text = "LisbethTravel";
             this.FormToolTip.SetToolTip(this.cBoxLisbeth, "Uses LisbethTravel tags in preference to GetTo");
             this.cBoxLisbeth.UseVisualStyleBackColor = true;
             // 
@@ -309,7 +308,7 @@
             // cBoxForceGetTo
             // 
             this.cBoxForceGetTo.AutoSize = true;
-            this.cBoxForceGetTo.Location = new System.Drawing.Point(290, 761);
+            this.cBoxForceGetTo.Location = new System.Drawing.Point(281, 759);
             this.cBoxForceGetTo.Name = "cBoxForceGetTo";
             this.cBoxForceGetTo.Size = new System.Drawing.Size(86, 17);
             this.cBoxForceGetTo.TabIndex = 32;
@@ -320,7 +319,7 @@
             // cBoxMoveTo
             // 
             this.cBoxMoveTo.AutoSize = true;
-            this.cBoxMoveTo.Location = new System.Drawing.Point(290, 783);
+            this.cBoxMoveTo.Location = new System.Drawing.Point(281, 781);
             this.cBoxMoveTo.Name = "cBoxMoveTo";
             this.cBoxMoveTo.Size = new System.Drawing.Size(90, 17);
             this.cBoxMoveTo.TabIndex = 38;
@@ -380,11 +379,23 @@
             this.btnCloseIf.UseVisualStyleBackColor = true;
             this.btnCloseIf.Click += new System.EventHandler(this.BtnCloseIf_Click);
             // 
+            // cBoxLisOptional
+            // 
+            this.cBoxLisOptional.AutoSize = true;
+            this.cBoxLisOptional.Location = new System.Drawing.Point(371, 715);
+            this.cBoxLisOptional.Name = "cBoxLisOptional";
+            this.cBoxLisOptional.Size = new System.Drawing.Size(65, 17);
+            this.cBoxLisOptional.TabIndex = 39;
+            this.cBoxLisOptional.Text = "Optional";
+            this.FormToolTip.SetToolTip(this.cBoxLisOptional, "Uses LisbethTravel tags in preference to GetTo");
+            this.cBoxLisOptional.UseVisualStyleBackColor = true;
+            // 
             // Gui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(777, 832);
+            this.Controls.Add(this.cBoxLisOptional);
             this.Controls.Add(this.cBoxMoveTo);
             this.Controls.Add(this.btnLisbethJSONExit);
             this.Controls.Add(this.btnLisbethJSONEntrance);
@@ -421,8 +432,9 @@
             this.Load += new System.EventHandler(this.Gui_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
+
+        private System.Windows.Forms.CheckBox cBoxLisOptional;
 
         private System.Windows.Forms.CheckBox cBoxMoveTo;
 

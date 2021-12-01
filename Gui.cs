@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ff14bot.Behavior;
@@ -151,6 +152,8 @@ namespace ProfileDevelopment
         #region Properties
 
         public bool IsLisbethTravel => cBoxLisbeth.Checked;
+
+        public bool IsLisbethOptional => cBoxLisOptional.Checked;
 
         public bool IsForceGetTo => cBoxForceGetTo.Checked;
 
@@ -696,28 +699,30 @@ namespace ProfileDevelopment
 
         private string GetToString()
         {
-            string dist = string.Empty;
-            if (DistanceCheck)
+            if (!DistanceCheck) return string.Empty;
+            if (!IsLisbethTravel) return NonLisbethMoveString();
+            if (!IsLisbethOptional) return $@"      <LisbethTravel Zone=""{ZoneId}"" Subzone=""{SubZoneId}"" Position=""{PlayerLocation}""/> <!-- Area=""{LisbethArea}"" -->" + "\n";
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(@"    <If Condition=""LisbethPresent"">");
+            sb.AppendLine($@"      <LisbethTravel Zone=""{ZoneId}"" Subzone=""{SubZoneId}"" Position=""{PlayerLocation}""/> <!-- Area=""{LisbethArea}"" -->");
+            sb.AppendLine(@"    </If>");
+            sb.AppendLine(@"    <If Condition=""not LisbethPresent"">");
+            sb.Append(NonLisbethMoveString());
+            sb.AppendLine(@"    </If>");
+            return sb.ToString();
+        }
+
+        private string NonLisbethMoveString()
+        {
+            if (IsFlightEnabled && WorldManager.CanFly)
             {
-                if (IsLisbethTravel)
-                {
-                    dist = $@"      <LisbethTravel Zone=""{ZoneId}"" Subzone=""{SubZoneId}"" Position=""{PlayerLocation}""/> <!-- Area=""{LisbethArea}"" -->" + "\n";
-                }
-                else if (IsFlightEnabled && WorldManager.CanFly)
-                {
-                    if (_lastLocationId != WorldManager.ZoneId) dist = TeleportTo;
-                    dist += $@"      <FlyTo XYZ=""{PlayerLocation}"" Land=""True""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->" + "\n";
-                }
-                else if (MoveToOnly)
-                {
-                    dist = $@"      <MoveTo XYZ=""{PlayerLocation}""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->" + "\n";
-                }
-                else
-                {
-                    dist = $@"      <GetTo ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}""/>  <!-- Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->" + "\n";
-                }
+                StringBuilder sb = new StringBuilder();
+                if (_lastLocationId != WorldManager.ZoneId) sb.Append(TeleportTo);
+                sb.AppendLine($@"      <FlyTo XYZ=""{PlayerLocation}"" Land=""True""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->");
+                return sb.ToString();
             }
-            return dist;
+            if (MoveToOnly) return $@"      <MoveTo XYZ=""{PlayerLocation}""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->" + "\n";
+            return $@"      <GetTo ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}""/>  <!-- Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->" + "\n";
         }
     }
 
