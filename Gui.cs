@@ -245,11 +245,13 @@ namespace ProfileDevelopment
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
                     str = $@"    <!-- {q.Name} -->
-    <If Condition=""not HasQuest({q.GlobalId}) and not IsQuestCompleted({q.GlobalId})"">" + "\n";
+    <If Condition=""not IsQuestCompleted({q.GlobalId})"">
+      <If Condition=""not HasQuest({q.GlobalId})"">" + "\n";
                     str += GetToString();
-                    str += $@"      <If Condition=""IsQuestAcceptQualified({q.GlobalId})"">
-        <LLPickupQuest QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}""/>
-        <LLSmallTalk/>
+                    str += $@"        <If Condition=""IsQuestAcceptQualified({q.GlobalId})"">
+          <LLPickupQuest QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}""/>
+          <LLSmallTalk/>
+        </If>
       </If>
     </If>";
                     UpdatePosition();
