@@ -701,14 +701,14 @@ namespace ProfileDevelopment
         {
             if (!DistanceCheck) return string.Empty;
             if (!IsLisbethTravel) return NonLisbethMoveString();
-            if (!IsLisbethOptional) return $@"      <LisbethTravel Zone=""{ZoneId}"" Subzone=""{SubZoneId}"" Position=""{PlayerLocation}""/> <!-- Area=""{LisbethArea}"" -->" + "\n";
+            if (!IsLisbethOptional) return $@"        <LisbethTravel Zone=""{ZoneId}"" Subzone=""{SubZoneId}"" Position=""{PlayerLocation}""/> <!-- Area=""{LisbethArea}"" -->" + "\n";
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(@"    <If Condition=""LisbethPresent"">");
-            sb.AppendLine($@"      <LisbethTravel Zone=""{ZoneId}"" Subzone=""{SubZoneId}"" Position=""{PlayerLocation}""/> <!-- Area=""{LisbethArea}"" -->");
-            sb.AppendLine(@"    </If>");
-            sb.AppendLine(@"    <If Condition=""not LisbethPresent"">");
-            sb.Append(NonLisbethMoveString());
-            sb.AppendLine(@"    </If>");
+            sb.AppendLine(@"      <If Condition=""LisbethPresent"">");
+            sb.AppendLine($@"        <LisbethTravel Zone=""{ZoneId}"" Subzone=""{SubZoneId}"" Position=""{PlayerLocation}""/> <!-- Area=""{LisbethArea}"" -->");
+            sb.AppendLine(@"      </If>");
+            sb.AppendLine(@"      <If Condition=""not LisbethPresent"">");
+            sb.Append("  " + NonLisbethMoveString());
+            sb.AppendLine(@"      </If>");
             return sb.ToString();
         }
 
