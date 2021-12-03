@@ -9,8 +9,9 @@ using ff14bot.Managers;
 
 namespace Helpers
 {
-      public static class Lisbeth
+    public static class Lisbeth
     {
+#pragma warning disable IDE0051 // Remove unused private members
         private static object _lisbeth;
         private static MethodInfo _orderMethod;
         private static MethodInfo _travelMethod;
@@ -23,6 +24,7 @@ namespace Helpers
         private static Func<Task<bool>> _exitCrafting;
         private static Func<string, Vector3, Task<bool>> _travelToWithArea;
         private static Func<uint, uint, Vector3, Task<bool>> _travelTo;
+#pragma warning restore IDE0051 // Remove unused private members
 
         static Lisbeth()
         {
@@ -31,36 +33,43 @@ namespace Helpers
 
         internal static void FindLisbeth()
         {
-            var loader = BotManager.Bots
+            ff14bot.AClasses.BotBase loader = BotManager.Bots
                 .FirstOrDefault(c => c.Name == "Lisbeth");
 
-            if (loader == null) return;
+            if (loader == null)
+            {
+                return;
+            }
 
-            var lisbethObjectProperty = loader.GetType().GetProperty("Lisbeth");
-            var lisbeth = lisbethObjectProperty?.GetValue(loader);
-            var orderMethod = lisbeth?.GetType().GetMethod("ExecuteOrders");
-            var apiObject = lisbeth.GetType().GetProperty("Api")?.GetValue(lisbeth);
-            if (lisbeth == null || orderMethod == null) return;
+            PropertyInfo lisbethObjectProperty = loader.GetType().GetProperty("Lisbeth");
+            object lisbeth = lisbethObjectProperty?.GetValue(loader);
+            MethodInfo orderMethod = lisbeth?.GetType().GetMethod("ExecuteOrders");
+            object apiObject = lisbeth.GetType().GetProperty("Api")?.GetValue(lisbeth);
+            if (lisbeth == null || orderMethod == null)
+            {
+                return;
+            }
+
             if (apiObject != null)
             {
-                var m = apiObject.GetType().GetMethod("GetCurrentAreaName");
+                MethodInfo m = apiObject.GetType().GetMethod("GetCurrentAreaName");
                 if (m != null)
                 {
                     try
                     {
-                        _getCurrentAreaName = (Func<string>) Delegate.CreateDelegate(typeof(Func<string>), apiObject, "GetCurrentAreaName");
-                        _stopGently = (Func<Task>) Delegate.CreateDelegate(typeof(Func<Task>), apiObject, "StopGently");
+                        _getCurrentAreaName = (Func<string>)Delegate.CreateDelegate(typeof(Func<string>), apiObject, "GetCurrentAreaName");
+                        _stopGently = (Func<Task>)Delegate.CreateDelegate(typeof(Func<Task>), apiObject, "StopGently");
                         //_stopGentlyAndWait = (Func<Task>) Delegate.CreateDelegate(typeof(Func<Task>), apiObject, "StopGentlyAndWait");
-                        _addHook = (Action<string, Func<Task>>) Delegate.CreateDelegate(typeof(Action<string, Func<Task>>), apiObject, "AddHook");
-                        _removeHook = (Action<string>) Delegate.CreateDelegate(typeof(Action<string>), apiObject, "RemoveHook");
-                        _getHookList = (Func<List<string>>) Delegate.CreateDelegate(typeof(Func<List<string>>), apiObject, "GetHookList");
-                        _exitCrafting = (Func<Task<bool>>) Delegate.CreateDelegate(typeof(Func<Task<bool>>), apiObject, "ExitCrafting");
-                        _equipOptimalGear = (Func<Task>) Delegate.CreateDelegate(typeof(Func<Task>), apiObject, "EquipOptimalGear");
-                        _extractMateria = (Func<Task>) Delegate.CreateDelegate(typeof(Func<Task>), apiObject, "ExtractMateria");
-                        _selfRepair = (Func<Task>) Delegate.CreateDelegate(typeof(Func<Task>), apiObject, "SelfRepair");
-                        _selfRepairWithMenderFallback = (Func<Task>) Delegate.CreateDelegate(typeof(Func<Task>), apiObject, "SelfRepairWithMenderFallback");
-                        _travelTo = (Func<uint, uint, Vector3, Task<bool>>) Delegate.CreateDelegate(typeof(Func<uint, uint, Vector3, Task<bool>>), apiObject, "TravelTo");
-                        _travelToWithArea = (Func<string, Vector3, Task<bool>>) Delegate.CreateDelegate(typeof(Func<string, Vector3, Task<bool>>), apiObject, "TravelToWithArea");
+                        _addHook = (Action<string, Func<Task>>)Delegate.CreateDelegate(typeof(Action<string, Func<Task>>), apiObject, "AddHook");
+                        _removeHook = (Action<string>)Delegate.CreateDelegate(typeof(Action<string>), apiObject, "RemoveHook");
+                        _getHookList = (Func<List<string>>)Delegate.CreateDelegate(typeof(Func<List<string>>), apiObject, "GetHookList");
+                        _exitCrafting = (Func<Task<bool>>)Delegate.CreateDelegate(typeof(Func<Task<bool>>), apiObject, "ExitCrafting");
+                        _equipOptimalGear = (Func<Task>)Delegate.CreateDelegate(typeof(Func<Task>), apiObject, "EquipOptimalGear");
+                        _extractMateria = (Func<Task>)Delegate.CreateDelegate(typeof(Func<Task>), apiObject, "ExtractMateria");
+                        _selfRepair = (Func<Task>)Delegate.CreateDelegate(typeof(Func<Task>), apiObject, "SelfRepair");
+                        _selfRepairWithMenderFallback = (Func<Task>)Delegate.CreateDelegate(typeof(Func<Task>), apiObject, "SelfRepairWithMenderFallback");
+                        _travelTo = (Func<uint, uint, Vector3, Task<bool>>)Delegate.CreateDelegate(typeof(Func<uint, uint, Vector3, Task<bool>>), apiObject, "TravelTo");
+                        _travelToWithArea = (Func<string, Vector3, Task<bool>>)Delegate.CreateDelegate(typeof(Func<string, Vector3, Task<bool>>), apiObject, "TravelToWithArea");
                     }
                     catch (Exception e)
                     {
@@ -80,42 +89,57 @@ namespace Helpers
 
         internal static async Task<bool> ExecuteOrders(string json)
         {
-            if (_orderMethod != null) return await (Task<bool>) _orderMethod.Invoke(_lisbeth, new object[] {json, false});
+            if (_orderMethod != null)
+            {
+                return await (Task<bool>)_orderMethod.Invoke(_lisbeth, new object[] { json, false });
+            }
 
             FindLisbeth();
             if (_orderMethod == null)
+            {
                 return false;
+            }
 
-            return await (Task<bool>) _orderMethod.Invoke(_lisbeth, new object[] {json, false});
+            return await (Task<bool>)_orderMethod.Invoke(_lisbeth, new object[] { json, false });
         }
-        
+
         internal static async Task<bool> ExecuteOrdersIgnoreHome(string json)
         {
-            if (_orderMethod != null) return await (Task<bool>) _orderMethod.Invoke(_lisbeth, new object[] {json, true});
+            if (_orderMethod != null)
+            {
+                return await (Task<bool>)_orderMethod.Invoke(_lisbeth, new object[] { json, true });
+            }
 
             FindLisbeth();
             if (_orderMethod == null)
+            {
                 return false;
+            }
 
-            return await (Task<bool>) _orderMethod.Invoke(_lisbeth, new object[] {json, true});
+            return await (Task<bool>)_orderMethod.Invoke(_lisbeth, new object[] { json, true });
         }
 
         internal static async Task<bool> TravelTo(string area, Vector3 position)
         {
-            if (_travelToWithArea != null) return await _travelToWithArea(area, position);
+            if (_travelToWithArea != null)
+            {
+                return await _travelToWithArea(area, position);
+            }
 
             FindLisbeth();
             if (_travelToWithArea == null)
+            {
                 return false;
+            }
 
             return await _travelToWithArea(area, position);
         }
-        
+
         public static async Task<bool> TravelToZones(uint zoneId, uint subzoneId, Vector3 position)
         {
             return await _travelTo(zoneId, subzoneId, position);
         }
-        
+
         public static async Task StopGently()
         {
             await _stopGently();
@@ -136,7 +160,7 @@ namespace Helpers
         {
             return _getHookList?.Invoke();
         }
-        
+
         public static Task<bool> ExitCrafting()
         {
             return _exitCrafting?.Invoke();
