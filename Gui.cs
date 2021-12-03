@@ -84,23 +84,25 @@ namespace ProfileDevelopment
         {
             GameObjectManager.Update();
         }
+
         private void RefreshGUI()
         {
             using (Core.Memory.TemporaryCacheState(false))
             {
                 ObjectManagerUpdate();
                 _gameObjects.Clear();
+                QuestWork selectedQuest = cBoxActiveQuests.SelectedItem as QuestWork;
                 QuestWork[] quests = QuestLogManager.ActiveQuests;
 
                 cBoxActiveQuests.DataSource = quests;
                 cBoxActiveQuests.DisplayMember = "Name";
                 cBoxActiveQuests.ValueMember = "Name";
 
-                if (cBoxActiveQuests.SelectedItem is QuestWork questData)
+                if (selectedQuest != null)
                 {
                     if (quests.Length > 0)
                     {
-                        cBoxActiveQuests.SelectedItem = quests.FirstOrDefault(r => r.Name == questData.Name) ?? quests[0];
+                        cBoxActiveQuests.SelectedItem = quests.FirstOrDefault(r => r.GlobalId == selectedQuest.GlobalId) ?? quests[0];
                     }
                 }
 
@@ -118,6 +120,7 @@ namespace ProfileDevelopment
                 lbInventory.SelectedItem = null;
             }
         }
+
         private void BtnRefresh_Click(object sender, EventArgs e)
         {
             RefreshGUI();
@@ -245,11 +248,13 @@ namespace ProfileDevelopment
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
                     str = $@"    <!-- {q.Name} -->
-    <If Condition=""not HasQuest({q.GlobalId}) and not IsQuestCompleted({q.GlobalId})"">" + "\n";
+    <If Condition=""not IsQuestCompleted({q.GlobalId})"">
+      <If Condition=""not HasQuest({q.GlobalId})"">" + "\n";
                     str += GetToString();
-                    str += $@"      <If Condition=""IsQuestAcceptQualified({q.GlobalId})"">
-        <LLPickupQuest QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}""/>
-        <LLSmallTalk/>
+                    str += $@"        <If Condition=""IsQuestAcceptQualified({q.GlobalId})"">
+          <LLPickupQuest QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}""/>
+          <LLSmallTalk/>
+        </If>
       </If>
     </If>";
                     UpdatePosition();
@@ -779,7 +784,6 @@ namespace ProfileDevelopment
                     str += GetToString();
                     str += $@"      {GetEmoteNPCString(q.Step, q.GlobalId)}
     </If>";
-                    _gameObjects.Clear();
                     UpdatePosition();
                     await Output(str);
                 }
