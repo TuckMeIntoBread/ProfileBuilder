@@ -120,6 +120,9 @@
   <metadata name="FormToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="FormToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="btnUseItem.ToolTip" xml:space="preserve">
     <value>FlyTo location will be your current location, be sure to be in an appropriate place before pressing. Clears all saved GameObjects on execution. Assign Objects with the Add GameObject button &amp; be sure to choose the appropriate item.</value>
   </data>

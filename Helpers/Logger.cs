@@ -1,12 +1,10 @@
-﻿using System;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using ff14bot.Helpers;
 
 namespace Helpers
 {
     public static class Logger
     {
-        private static Random rng = new Random();
         public static void External(string caller, string message, Color color)
         {
             Logging.Write(color, $"[{caller}]" + message);
@@ -21,6 +19,5 @@ namespace Helpers
         {
             Logging.Write(Colors.Aqua, text);
         }
-
     }
 }

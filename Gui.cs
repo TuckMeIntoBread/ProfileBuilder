@@ -1,16 +1,16 @@
-﻿using Clio.Utilities;
-using ff14bot;
-using ff14bot.Enums;
-using ff14bot.Managers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Clio.Utilities;
+using ff14bot;
 using ff14bot.Behavior;
+using ff14bot.Enums;
 using ff14bot.Helpers;
+using ff14bot.Managers;
 using ff14bot.RemoteWindows;
 using static Helpers.General;
 
@@ -48,7 +48,7 @@ namespace ProfileDevelopment
 
         private void LbKeyItems_MouseDown(object sender, MouseEventArgs e)
         {
-            var index = lbKeyItems.IndexFromPoint(e.Location);
+            int index = lbKeyItems.IndexFromPoint(e.Location);
             if (index == ListBox.NoMatches)
             {
                 lbKeyItems.ClearSelected();
@@ -57,7 +57,7 @@ namespace ProfileDevelopment
 
         private void LbInventory_MouseDown(object sender, MouseEventArgs e)
         {
-            var index = lbInventory.IndexFromPoint(e.Location);
+            int index = lbInventory.IndexFromPoint(e.Location);
             if (index == ListBox.NoMatches)
             {
                 lbInventory.ClearSelected();
@@ -90,14 +90,13 @@ namespace ProfileDevelopment
             {
                 ObjectManagerUpdate();
                 _gameObjects.Clear();
-                var questData = cBoxActiveQuests.SelectedItem as QuestWork;
-                var quests = QuestLogManager.ActiveQuests;
+                QuestWork[] quests = QuestLogManager.ActiveQuests;
 
                 cBoxActiveQuests.DataSource = quests;
                 cBoxActiveQuests.DisplayMember = "Name";
                 cBoxActiveQuests.ValueMember = "Name";
 
-                if (questData != null)
+                if (cBoxActiveQuests.SelectedItem is QuestWork questData)
                 {
                     if (quests.Length > 0)
                     {
@@ -111,7 +110,7 @@ namespace ProfileDevelopment
                 lbKeyItems.ValueMember = "Name";
                 lbKeyItems.SelectedItem = null;
 
-                var theseBags = new[] { InventoryBagId.Bag1, InventoryBagId.Bag2, InventoryBagId.Bag3, InventoryBagId.Bag4 };
+                InventoryBagId[] theseBags = new[] { InventoryBagId.Bag1, InventoryBagId.Bag2, InventoryBagId.Bag3, InventoryBagId.Bag4 };
                 // refresh InventoryItems
                 lbInventory.DataSource = InventoryManager.FilledSlots.Where(r => theseBags.Contains(r.BagId)).OrderBy(s => s.Name).ToList();
                 lbInventory.DisplayMember = "Name";
@@ -132,7 +131,11 @@ namespace ProfileDevelopment
         private void BtnOutput_Click(object sender, EventArgs e)
         {
             string path = $"{JsonSettings.AssemblyPath}\\Profiles";
-            if (!Directory.Exists(path)) path = JsonSettings.AssemblyPath;
+            if (!Directory.Exists(path))
+            {
+                path = JsonSettings.AssemblyPath;
+            }
+
             OpenFileDialog dlg = new OpenFileDialog
             {
                 InitialDirectory = path,
@@ -172,7 +175,7 @@ namespace ProfileDevelopment
         private static string TargetLocation => Core.Target.Location.ToString().Remove(0, 1).Remove(Core.Target.Location.ToString().Remove(0, 1).Length - 1, 1);
 
         public static string ZoneId => WorldManager.ZoneId.ToString();
-        
+
         public static string SubZoneId => WorldManager.SubZoneId.ToString();
 
         public static string TeleportTo
@@ -181,15 +184,15 @@ namespace ProfileDevelopment
             {
                 try
                 {
-                    var _currentZoneId = WorldManager.ZoneId;
-                    var _availableLocations = new List<Tuple<uint, Vector3>>();
-                    foreach (var t in WorldManager.AvailableLocations.Where(z => z.ZoneId == _currentZoneId))
+                    ushort _currentZoneId = WorldManager.ZoneId;
+                    List<Tuple<uint, Vector3>> _availableLocations = new List<Tuple<uint, Vector3>>();
+                    foreach (WorldManager.TeleportLocation t in WorldManager.AvailableLocations.Where(z => z.ZoneId == _currentZoneId))
                     {
                         _availableLocations.Add(WorldManager.AetheryteIdsForZone(_currentZoneId).Where(al => al.Item1 == t.AetheryteId).FirstOrDefault());
                     }
 
-                    var _closestAetheryteId = _availableLocations.OrderBy(loc => Core.Me.Location.Distance2D(loc.Item2)).FirstOrDefault().Item1;
-                    var _closestAetheryteName = WorldManager.AvailableLocations.Where(r => r.ZoneId == _currentZoneId && r.AetheryteId == _closestAetheryteId).FirstOrDefault().Name;
+                    uint _closestAetheryteId = _availableLocations.OrderBy(loc => Core.Me.Location.Distance2D(loc.Item2)).FirstOrDefault().Item1;
+                    string _closestAetheryteName = WorldManager.AvailableLocations.Where(r => r.ZoneId == _currentZoneId && r.AetheryteId == _closestAetheryteId).FirstOrDefault().Name;
 
                     return $@"    <TeleportTo Name=""{_closestAetheryteName}"" AetheryteId=""{_closestAetheryteId}""/>" + "\n";
                 }
@@ -204,13 +207,17 @@ namespace ProfileDevelopment
         {
             get
             {
-                var itemIds = new List<uint>();
-                foreach (var item in lbKeyItems.SelectedItems.Cast<BagSlot>()) { itemIds.Add(item.RawItemId); }
-                foreach (var item in lbInventory.SelectedItems.Cast<BagSlot>()) { itemIds.Add(item.RawItemId); }
+                List<uint> itemIds = new List<uint>();
+                foreach (BagSlot item in lbKeyItems.SelectedItems.Cast<BagSlot>())
+                { itemIds.Add(item.RawItemId); }
+                foreach (BagSlot item in lbInventory.SelectedItems.Cast<BagSlot>())
+                { itemIds.Add(item.RawItemId); }
 
-                var result = " ";
-                if (itemIds.Count == 1) { result = $@" ItemId=""{itemIds.FirstOrDefault()}"" "; }
-                else if (itemIds.Count > 1) { result = $@" ItemIds=""{string.Join(",", itemIds)}"" "; }
+                string result = " ";
+                if (itemIds.Count == 1)
+                { result = $@" ItemId=""{itemIds.FirstOrDefault()}"" "; }
+                else if (itemIds.Count > 1)
+                { result = $@" ItemIds=""{string.Join(",", itemIds)}"" "; }
 
                 return result;
             }
@@ -347,8 +354,8 @@ namespace ProfileDevelopment
             {
                 return $@"<UseObject NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
             }
-            var objs = new Dictionary<uint, string>();
-            foreach (var obj in _gameObjects)
+            Dictionary<uint, string> objs = new Dictionary<uint, string>();
+            foreach (ObjectData obj in _gameObjects)
             {
                 objs.Add(obj.NpcId, obj.Location.ToString().Remove(0, 1).Remove(obj.Location.ToString().Remove(0, 1).Length - 1, 1));
             }
@@ -356,16 +363,16 @@ namespace ProfileDevelopment
             objs.OrderBy(r => r.Key);
 
             bool withinRadius = false;
-            var result = string.Empty;
+            string result = string.Empty;
             if (objs.Count == 1)
             {
                 result = $@"<UseObject NpcId=""{objs.FirstOrDefault().Key}"" XYZ=""{objs.FirstOrDefault().Value}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
             }
             else if (objs.Count > 1)
             {
-                foreach (var obj in objs)
+                foreach (KeyValuePair<uint, string> obj in objs)
                 {
-                    var _objLoc = new Vector3(obj.Value);
+                    Vector3 _objLoc = new Vector3(obj.Value);
                     if ((_objLoc.X > Core.Me.X - 50 && _objLoc.X < Core.Me.X + 50) && (_objLoc.Z > Core.Me.Z - 50 && _objLoc.Z < Core.Me.Z + 50))
                     {
                         withinRadius = true;
@@ -378,8 +385,8 @@ namespace ProfileDevelopment
                 }
                 else
                 {
-                    var hotSpots = new List<string>();
-                    foreach (var loc in objs.Values.ToArray())
+                    List<string> hotSpots = new List<string>();
+                    foreach (string loc in objs.Values.ToArray())
                     {
                         hotSpots.Add($@"          <HotSpot XYZ=""{loc}"" Radius=""10""/>
 ");
@@ -425,8 +432,8 @@ namespace ProfileDevelopment
 
         private string GetUseItemString(int stepId, int questId)
         {
-            var objs = new Dictionary<uint, string>();
-            foreach (var obj in _gameObjects)
+            Dictionary<uint, string> objs = new Dictionary<uint, string>();
+            foreach (ObjectData obj in _gameObjects)
             {
                 objs.Add(obj.NpcId, obj.Location.ToString().Remove(0, 1).Remove(obj.Location.ToString().Remove(0, 1).Length - 1, 1));
             }
@@ -434,7 +441,7 @@ namespace ProfileDevelopment
             objs.OrderBy(r => r.Key);
 
             bool withinRadius = false;
-            var result = string.Empty;
+            string result = string.Empty;
             if (objs.Count == 1)
             {
                 {
@@ -443,9 +450,9 @@ namespace ProfileDevelopment
             }
             else if (objs.Count > 1)
             {
-                foreach (var obj in objs)
+                foreach (KeyValuePair<uint, string> obj in objs)
                 {
-                    var _objLoc = new Vector3(obj.Value);
+                    Vector3 _objLoc = new Vector3(obj.Value);
                     if ((_objLoc.X > Core.Me.X - 50 && _objLoc.X < Core.Me.X + 50) && (_objLoc.Z > Core.Me.Z - 50 && _objLoc.Z < Core.Me.Z + 50))
                     {
                         withinRadius = true;
@@ -458,8 +465,8 @@ namespace ProfileDevelopment
                 }
                 else
                 {
-                    var hotSpots = new List<string>();
-                    foreach (var loc in objs.Values.ToArray())
+                    List<string> hotSpots = new List<string>();
+                    foreach (string loc in objs.Values.ToArray())
                     {
                         hotSpots.Add($@"          <HotSpot XYZ=""{loc}"" Radius=""10""/>
 ");
@@ -546,9 +553,9 @@ namespace ProfileDevelopment
         }
 
         #endregion CloseProfile
-        
+
         #region LisbethJSON
-        
+
         private async void BtnLisbethJSONEntranceTo_Click(object sender, EventArgs e)
         {
             using (Core.Memory.TemporaryCacheState(false))
@@ -560,11 +567,11 @@ namespace ProfileDevelopment
                 Vector3 startPos = Core.Me.Location;
                 uint npcId = GameObjectManager.Target.NpcId;
                 GameObjectManager.Target.Interact();
-                await WaitUntil(() => (SelectYesno.IsOpen || SelectString.IsOpen || SelectIconString.IsOpen || Talk.DialogOpen || JournalAccept.IsOpen || QuestLogManager.InCutscene || CommonBehaviors.IsLoading), timeout:8000);
+                await WaitUntil(() => (SelectYesno.IsOpen || SelectString.IsOpen || SelectIconString.IsOpen || Talk.DialogOpen || JournalAccept.IsOpen || QuestLogManager.InCutscene || CommonBehaviors.IsLoading), timeout: 8000);
                 await SmallTalk();
                 string endArea = LisbethAreaNull;
                 Vector3 endPos = Core.Me.Location;
-                
+
                 if (LisbethArea.Length < 1)
                 {
                     str += "\\\\NewArea\n";
@@ -572,7 +579,11 @@ namespace ProfileDevelopment
                     str += $@"{whitespace}""Name"": ""{endArea}""," + "\n";
                     str += $@"{whitespace}""Zone"": {WorldManager.ZoneId}," + "\n";
                     str += $@"{whitespace}""CanTeleport"": {WorldManager.CanTeleport().ToString().ToLower()}," + "\n";
-                    if (WorldManager.CanFly) str += $@"{whitespace}""CanFly"": true," + "\n";
+                    if (WorldManager.CanFly)
+                    {
+                        str += $@"{whitespace}""CanFly"": true," + "\n";
+                    }
+
                     str = str.Remove(str.LastIndexOf(",", StringComparison.Ordinal), 1);
                     str += "  },\n";
                 }
@@ -590,7 +601,7 @@ namespace ProfileDevelopment
                 await Output(str);
             }
         }
-        
+
         private async void BtnLisbethJSONExitFrom_Click(object sender, EventArgs e)
         {
             using (Core.Memory.TemporaryCacheState(false))
@@ -602,7 +613,7 @@ namespace ProfileDevelopment
                 Vector3 startPos = Core.Me.Location;
                 uint npcId = GameObjectManager.Target.NpcId;
                 GameObjectManager.Target.Interact();
-                await WaitUntil(() => (SelectYesno.IsOpen || SelectString.IsOpen || SelectIconString.IsOpen || Talk.DialogOpen || JournalAccept.IsOpen || QuestLogManager.InCutscene || CommonBehaviors.IsLoading), timeout:8000);
+                await WaitUntil(() => (SelectYesno.IsOpen || SelectString.IsOpen || SelectIconString.IsOpen || Talk.DialogOpen || JournalAccept.IsOpen || QuestLogManager.InCutscene || CommonBehaviors.IsLoading), timeout: 8000);
                 await SmallTalk();
                 string endArea = LisbethAreaNull;
                 Vector3 endPos = Core.Me.Location;
@@ -620,7 +631,7 @@ namespace ProfileDevelopment
                 await Output(str);
             }
         }
-        
+
         #endregion LisbethJSON
 
         #region QuestConditions
@@ -685,8 +696,17 @@ namespace ProfileDevelopment
 
         private async Task Output(string str)
         {
-            if (OutputClipboard) Clipboard.SetText(str);
-            else using (StreamWriter outputFile = new StreamWriter(OutputFilePath, true)) await outputFile.WriteLineAsync(str);
+            if (OutputClipboard)
+            {
+                Clipboard.SetText(str);
+            }
+            else
+            {
+                using (StreamWriter outputFile = new StreamWriter(OutputFilePath, true))
+                {
+                    await outputFile.WriteLineAsync(str);
+                }
+            }
         }
 
         private void UpdatePosition()
@@ -699,9 +719,21 @@ namespace ProfileDevelopment
 
         private string GetToString()
         {
-            if (!DistanceCheck) return string.Empty;
-            if (!IsLisbethTravel) return NonLisbethMoveString();
-            if (!IsLisbethOptional) return $@"        <LisbethTravel Zone=""{ZoneId}"" Subzone=""{SubZoneId}"" Position=""{PlayerLocation}""/> <!-- Area=""{LisbethArea}"" -->" + "\n";
+            if (!DistanceCheck)
+            {
+                return string.Empty;
+            }
+
+            if (!IsLisbethTravel)
+            {
+                return NonLisbethMoveString();
+            }
+
+            if (!IsLisbethOptional)
+            {
+                return $@"        <LisbethTravel Zone=""{ZoneId}"" Subzone=""{SubZoneId}"" Position=""{PlayerLocation}""/> <!-- Area=""{LisbethArea}"" -->" + "\n";
+            }
+
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(@"      <If Condition=""LisbethPresent"">");
             sb.AppendLine($@"        <LisbethTravel Zone=""{ZoneId}"" Subzone=""{SubZoneId}"" Position=""{PlayerLocation}""/> <!-- Area=""{LisbethArea}"" -->");
@@ -717,13 +749,50 @@ namespace ProfileDevelopment
             if (IsFlightEnabled && WorldManager.CanFly)
             {
                 StringBuilder sb = new StringBuilder();
-                if (_lastLocationId != WorldManager.ZoneId) sb.Append(TeleportTo);
+                if (_lastLocationId != WorldManager.ZoneId)
+                {
+                    sb.Append(TeleportTo);
+                }
+
                 sb.AppendLine($@"      <FlyTo XYZ=""{PlayerLocation}"" Land=""True""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->");
                 return sb.ToString();
             }
-            if (MoveToOnly) return $@"      <MoveTo XYZ=""{PlayerLocation}""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->" + "\n";
+            if (MoveToOnly)
+            {
+                return $@"      <MoveTo XYZ=""{PlayerLocation}""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->" + "\n";
+            }
+
             return $@"      <GetTo ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}""/>  <!-- Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->" + "\n";
         }
+
+        #region EmoteNPC
+
+        private async void BtnEmoteNPC_Click(object sender, EventArgs e)
+        {
+            using (Core.Memory.TemporaryCacheState(false))
+            {
+                ObjectManagerUpdate();
+                string str = string.Empty;
+                if (cBoxActiveQuests.SelectedItem is QuestWork q)
+                {
+                    str = $@"    <If Condition=""GetQuestStep({q.GlobalId}) == {q.Step}"">" + "\n";
+                    str += GetToString();
+                    str += $@"      {GetEmoteNPCString(q.Step, q.GlobalId)}
+    </If>";
+                    _gameObjects.Clear();
+                    UpdatePosition();
+                    await Output(str);
+                }
+            }
+        }
+
+        private static string GetEmoteNPCString(int stepId, int questId)
+        {
+            string emote = "greet"; // TODO: Make selectable instead of post-editing XML file
+
+            return $@"<EmoteNPC Emote=""{emote}"" NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
+        }
+        #endregion EmoteNPC
     }
 
     public class ObjectData

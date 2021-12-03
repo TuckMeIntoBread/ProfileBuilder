@@ -1,7 +1,7 @@
-﻿using ff14bot.AClasses;
-using System;
+﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using ff14bot.AClasses;
 
 namespace ProfileDevelopment
 {
@@ -50,7 +50,8 @@ namespace ProfileDevelopment
         {
             if (_guiForm != null && _guiForm.Visible)
             {
-                _guiForm.Invoke((MethodInvoker)delegate { _guiForm.Close(); });
+                _guiForm.Invoke((MethodInvoker)delegate
+                { _guiForm.Close(); });
             }
         }
 
