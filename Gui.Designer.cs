@@ -310,6 +310,8 @@
             // cBoxForceGetTo
             // 
             this.cBoxForceGetTo.AutoSize = true;
+            this.cBoxForceGetTo.Checked = true;
+            this.cBoxForceGetTo.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cBoxForceGetTo.Location = new System.Drawing.Point(281, 759);
             this.cBoxForceGetTo.Name = "cBoxForceGetTo";
             this.cBoxForceGetTo.Size = new System.Drawing.Size(86, 17);
