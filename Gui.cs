@@ -166,6 +166,8 @@ namespace ProfileDevelopment
 
         public bool OutputClipboard => cBoxClipboard.Checked;
 
+        public bool UseQuestInfo => cBoxUseQuestInfo.Checked;
+
         private static string LisbethArea => Helpers.Lisbeth.GetCurrentAreaName;
 
         private static string LisbethAreaNull => LisbethArea.Length < 1 ? WorldManager.CurrentZoneName : LisbethArea;
@@ -293,7 +295,7 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""GetQuestStep({q.GlobalId}) == {q.Step}"">" + "\n";
+                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
                     str += $@"      <LLTalkTo NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
     </If>";
@@ -334,7 +336,7 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""GetQuestStep({q.GlobalId}) == {q.Step}"">" + "\n";
+                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
                     str += $@"      <LLHandOver{ItemIdString}NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
     </If>";
@@ -415,7 +417,7 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""GetQuestStep({q.GlobalId}) == {q.Step}"">" + "\n";
+                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
                     str += $@"      {GetUseObjectString(q.Step, q.GlobalId)}
     </If>";
@@ -494,7 +496,7 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""GetQuestStep({q.GlobalId}) == {q.Step}"">" + "\n";
+                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
                     str += $@"      {GetUseItemString(q.Step, q.GlobalId)}
     </If>";
@@ -636,13 +638,25 @@ namespace ProfileDevelopment
 
         #region QuestConditions
 
+        private string QuestStepConditionString(QuestWork q)
+        {
+            string questStepString = $"GetQuestStep({q.GlobalId}) == {q.Step}";
+            if (UseQuestInfo)
+            {
+                GridItem qInfo = pGridQuestData.SelectedGridItem;
+                questStepString += $" and GetQuestById({q.GlobalId}).{qInfo.PropertyDescriptor.Name} == {qInfo.Value}";
+            }
+
+            return questStepString;
+        }
+
         private async void BtnQuestStep_Click(object sender, EventArgs e)
         {
             using (Core.Memory.TemporaryCacheState(false))
             {
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    string str = $@"    <If Condition=""GetQuestStep({q.GlobalId}) == {q.Step}"">" + "\n";
+                    string str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += $@"      " + "\n";
                     str += $@"    </If>";
                     await Output(str);
@@ -775,7 +789,7 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""GetQuestStep({q.GlobalId}) == {q.Step}"">" + "\n";
+                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
                     str += $@"      {GetEmoteNPCString(q.Step, q.GlobalId)}
     </If>";
