@@ -749,15 +749,15 @@ namespace ProfileDevelopment
             {
                 return NonLisbethMoveString();
             }
-
+ 
             if (!IsLisbethOptional)
             {
-                return $@"        <LisbethTravel Zone=""{ZoneId}"" Subzone=""{SubZoneId}"" Position=""{PlayerLocation}""/> <!-- Area=""{LisbethArea}"" -->" + "\n";
+                return $@"        <LisbethTravel ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}""/> " + "\n";
             }
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(@"      <If Condition=""LisbethPresent"">");
-            sb.AppendLine($@"        <LisbethTravel Zone=""{ZoneId}"" Subzone=""{SubZoneId}"" Position=""{PlayerLocation}""/> <!-- Area=""{LisbethArea}"" -->");
+            sb.AppendLine($@"        <LisbethTravel ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}""/> ");
             sb.AppendLine(@"      </If>");
             sb.AppendLine(@"      <If Condition=""not LisbethPresent"">");
             sb.Append("  " + NonLisbethMoveString());
@@ -782,15 +782,15 @@ namespace ProfileDevelopment
                     sb.Append(TeleportTo);
                 }
 
-                sb.AppendLine($@"      <FlyTo XYZ=""{PlayerLocation}"" Land=""True""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->");
+                sb.AppendLine($@"      <FlyTo XYZ=""{PlayerLocation}"" Land=""True""/> ");
             }
             else if (MoveToOnly)
             {
-                sb.AppendLine($@"      <MoveTo XYZ=""{PlayerLocation}""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->");
+                sb.AppendLine($@"      <MoveTo XYZ=""{PlayerLocation}""/> ");
             }
             else
             {
-                sb.AppendLine($@"      <GetTo ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}""/>  <!-- Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->");
+                sb.AppendLine($@"      <GetTo ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}""/>  ");
             }
 
             if (NoMount)
