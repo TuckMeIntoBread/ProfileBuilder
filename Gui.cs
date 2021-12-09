@@ -167,6 +167,8 @@ namespace ProfileDevelopment
 
         public bool MoveToOnly => cBoxMoveTo.Checked;
 
+        public bool NoMount => cBoxNoMount.Checked;
+
         public bool OutputClipboard => cBoxClipboard.Checked;
 
         private static string LisbethArea => Helpers.Lisbeth.GetCurrentAreaName;
@@ -751,23 +753,38 @@ namespace ProfileDevelopment
 
         private string NonLisbethMoveString()
         {
+            StringBuilder sb = new StringBuilder();
+
+            if (NoMount)
+            {
+                sb.AppendLine($@"      <RunCode Name=""TurnOffMount"" />");
+            }
+
             if (IsFlightEnabled && WorldManager.CanFly)
             {
-                StringBuilder sb = new StringBuilder();
+
                 if (_lastLocationId != WorldManager.ZoneId)
                 {
                     sb.Append(TeleportTo);
                 }
 
                 sb.AppendLine($@"      <FlyTo XYZ=""{PlayerLocation}"" Land=""True""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->");
-                return sb.ToString();
             }
-            if (MoveToOnly)
+            else if (MoveToOnly)
             {
-                return $@"      <MoveTo XYZ=""{PlayerLocation}""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->" + "\n";
+                sb.AppendLine($@"      <MoveTo XYZ=""{PlayerLocation}""/> <!-- Zone: ""{ZoneId}"" Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->");
+            }
+            else
+            {
+                sb.AppendLine($@"      <GetTo ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}""/>  <!-- Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->");
             }
 
-            return $@"      <GetTo ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}""/>  <!-- Subzone=""{SubZoneId}"" Area=""{LisbethArea}"" -->" + "\n";
+            if (NoMount)
+            {
+                sb.AppendLine($@"      <RunCode Name=""TurnOnMount"" />");
+            }
+
+            return sb.ToString();
         }
 
         #region EmoteNPC

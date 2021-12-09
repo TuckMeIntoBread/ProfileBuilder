@@ -58,6 +58,7 @@
             this.cBoxForceGetTo = new System.Windows.Forms.CheckBox();
             this.cBoxMoveTo = new System.Windows.Forms.CheckBox();
             this.cBoxLisOptional = new System.Windows.Forms.CheckBox();
+            this.cBoxNoMount = new System.Windows.Forms.CheckBox();
             this.btnLisbethJSONEntrance = new System.Windows.Forms.Button();
             this.btnLisbethJSONExit = new System.Windows.Forms.Button();
             this.btnQuestStep = new System.Windows.Forms.Button();
@@ -343,6 +344,17 @@
             this.FormToolTip.SetToolTip(this.cBoxLisOptional, "Uses LisbethTravel tags in preference to GetTo");
             this.cBoxLisOptional.UseVisualStyleBackColor = true;
             // 
+            // cBoxNoMount
+            // 
+            this.cBoxNoMount.AutoSize = true;
+            this.cBoxNoMount.Location = new System.Drawing.Point(371, 782);
+            this.cBoxNoMount.Name = "cBoxNoMount";
+            this.cBoxNoMount.Size = new System.Drawing.Size(73, 17);
+            this.cBoxNoMount.TabIndex = 93;
+            this.cBoxNoMount.Text = "No Mount";
+            this.FormToolTip.SetToolTip(this.cBoxNoMount, "Disables mount during MoveTo");
+            this.cBoxNoMount.UseVisualStyleBackColor = true;
+            // 
             // btnLisbethJSONEntrance
             // 
             this.btnLisbethJSONEntrance.Location = new System.Drawing.Point(290, 536);
@@ -410,6 +422,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(777, 832);
+            this.Controls.Add(this.cBoxNoMount);
             this.Controls.Add(this.btnEmoteNPC);
             this.Controls.Add(this.cBoxLisOptional);
             this.Controls.Add(this.cBoxMoveTo);
@@ -490,6 +503,7 @@
         private System.Windows.Forms.Button btnQuestStepGt0;
         private System.Windows.Forms.Button btnCloseIf;
         private System.Windows.Forms.Button btnEmoteNPC;
+        private System.Windows.Forms.CheckBox cBoxNoMount;
     }
 }
 
