@@ -59,6 +59,7 @@
             this.cBoxMoveTo = new System.Windows.Forms.CheckBox();
             this.cBoxLisOptional = new System.Windows.Forms.CheckBox();
             this.cBoxNoMount = new System.Windows.Forms.CheckBox();
+            this.cBoxUseQuestInfo = new System.Windows.Forms.CheckBox();
             this.btnLisbethJSONEntrance = new System.Windows.Forms.Button();
             this.btnLisbethJSONExit = new System.Windows.Forms.Button();
             this.btnQuestStep = new System.Windows.Forms.Button();
@@ -355,6 +356,17 @@
             this.FormToolTip.SetToolTip(this.cBoxNoMount, "Disables mount during MoveTo");
             this.cBoxNoMount.UseVisualStyleBackColor = true;
             // 
+            // cBoxUseQuestInfo
+            // 
+            this.cBoxUseQuestInfo.AutoSize = true;
+            this.cBoxUseQuestInfo.Location = new System.Drawing.Point(99, 40);
+            this.cBoxUseQuestInfo.Name = "cBoxUseQuestInfo";
+            this.cBoxUseQuestInfo.Size = new System.Drawing.Size(97, 17);
+            this.cBoxUseQuestInfo.TabIndex = 93;
+            this.cBoxUseQuestInfo.Text = "Use Quest Info";
+            this.FormToolTip.SetToolTip(this.cBoxUseQuestInfo, "Uses LisbethTravel tags in preference to GetTo");
+            this.cBoxUseQuestInfo.UseVisualStyleBackColor = true;
+            // 
             // btnLisbethJSONEntrance
             // 
             this.btnLisbethJSONEntrance.Location = new System.Drawing.Point(290, 536);
@@ -423,6 +435,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(777, 832);
             this.Controls.Add(this.cBoxNoMount);
+            this.Controls.Add(this.cBoxUseQuestInfo);
             this.Controls.Add(this.btnEmoteNPC);
             this.Controls.Add(this.cBoxLisOptional);
             this.Controls.Add(this.cBoxMoveTo);
@@ -461,8 +474,9 @@
             this.Load += new System.EventHandler(this.Gui_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
+
+        private System.Windows.Forms.CheckBox cBoxUseQuestInfo;
 
         private System.Windows.Forms.CheckBox cBoxLisOptional;
 
