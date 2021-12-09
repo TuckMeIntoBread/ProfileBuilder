@@ -58,6 +58,7 @@
             this.cBoxForceGetTo = new System.Windows.Forms.CheckBox();
             this.cBoxMoveTo = new System.Windows.Forms.CheckBox();
             this.cBoxLisOptional = new System.Windows.Forms.CheckBox();
+            this.cBoxNoMount = new System.Windows.Forms.CheckBox();
             this.cBoxUseQuestInfo = new System.Windows.Forms.CheckBox();
             this.btnLisbethJSONEntrance = new System.Windows.Forms.Button();
             this.btnLisbethJSONExit = new System.Windows.Forms.Button();
@@ -224,7 +225,9 @@
             this.btnUseObject.Size = new System.Drawing.Size(137, 23);
             this.btnUseObject.TabIndex = 11;
             this.btnUseObject.Text = "UseObject";
-            this.FormToolTip.SetToolTip(this.btnUseObject, "FlyTo location will be your current location, be sure to be in an appropriate pla" + "ce before pressing. Clears all saved GameObjects on execution. Assign Objects wi" + "th the Add GameObject button.");
+            this.FormToolTip.SetToolTip(this.btnUseObject, "FlyTo location will be your current location, be sure to be in an appropriate pla" +
+        "ce before pressing. Clears all saved GameObjects on execution. Assign Objects wi" +
+        "th the Add GameObject button.");
             this.btnUseObject.UseVisualStyleBackColor = true;
             this.btnUseObject.Click += new System.EventHandler(this.BtnUseObject_Click);
             // 
@@ -342,6 +345,17 @@
             this.FormToolTip.SetToolTip(this.cBoxLisOptional, "Uses LisbethTravel tags in preference to GetTo");
             this.cBoxLisOptional.UseVisualStyleBackColor = true;
             // 
+            // cBoxNoMount
+            // 
+            this.cBoxNoMount.AutoSize = true;
+            this.cBoxNoMount.Location = new System.Drawing.Point(371, 782);
+            this.cBoxNoMount.Name = "cBoxNoMount";
+            this.cBoxNoMount.Size = new System.Drawing.Size(73, 17);
+            this.cBoxNoMount.TabIndex = 93;
+            this.cBoxNoMount.Text = "No Mount";
+            this.FormToolTip.SetToolTip(this.cBoxNoMount, "Disables mount during MoveTo");
+            this.cBoxNoMount.UseVisualStyleBackColor = true;
+            // 
             // cBoxUseQuestInfo
             // 
             this.cBoxUseQuestInfo.AutoSize = true;
@@ -420,6 +434,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(777, 832);
+            this.Controls.Add(this.cBoxNoMount);
             this.Controls.Add(this.cBoxUseQuestInfo);
             this.Controls.Add(this.btnEmoteNPC);
             this.Controls.Add(this.cBoxLisOptional);
@@ -502,6 +517,7 @@
         private System.Windows.Forms.Button btnQuestStepGt0;
         private System.Windows.Forms.Button btnCloseIf;
         private System.Windows.Forms.Button btnEmoteNPC;
+        private System.Windows.Forms.CheckBox cBoxNoMount;
     }
 }
 
