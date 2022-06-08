@@ -256,8 +256,7 @@ namespace ProfileDevelopment
       <If Condition=""not HasQuest({q.GlobalId})"">" + "\n";
                     str += GetToString();
                     str += $@"        <If Condition=""IsQuestAcceptQualified({q.GlobalId})"">
-          <LLPickupQuest QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}""/>
-          <LLSmallTalk/>
+          <PickupQuest QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}""/>
         </If>
       </If>
     </If>";
@@ -279,11 +278,10 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""GetQuestStep({q.GlobalId}) == 255"">" + "\n";
+                    str = $@"      <If Condition=""GetQuestStep({q.GlobalId}) == 255"">" + "\n";
                     str += GetToString();
-                    str += $@"      <LLTurnIn{ItemIdString}QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}""/>
-      <LLSmallTalk/>
-    </If>";
+                    str += $@"        <TurnIn{ItemIdString}QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}""/>
+      </If>";
                     UpdatePosition();
                     await Output(str);
                 }
@@ -302,10 +300,10 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
+                    str = $@"      <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
-                    str += $@"      <LLTalkTo NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
-    </If>";
+                    str += $@"        <TalkTo NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
+      </If>";
                     UpdatePosition();
                     await Output(str);
                 }
@@ -345,7 +343,7 @@ namespace ProfileDevelopment
                 {
                     str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
-                    str += $@"      <LLHandOver{ItemIdString}NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
+                    str += $@"      <HandOver{ItemIdString}NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
     </If>";
                     UpdatePosition();
                     await Output(str);
@@ -771,7 +769,7 @@ namespace ProfileDevelopment
 
             if (NoMount)
             {
-                sb.AppendLine($@"      <RunCode Name=""TurnOffMount"" />");
+                sb.AppendLine($@"        <RunCode Name=""TurnOffMount"" />");
             }
 
             if (IsFlightEnabled && WorldManager.CanFly)
@@ -782,20 +780,20 @@ namespace ProfileDevelopment
                     sb.Append(TeleportTo);
                 }
 
-                sb.AppendLine($@"      <FlyTo XYZ=""{PlayerLocation}"" Land=""True""/> ");
+                sb.AppendLine($@"        <FlyTo ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}"" Land=""True""/> ");
             }
             else if (MoveToOnly)
             {
-                sb.AppendLine($@"      <MoveTo XYZ=""{PlayerLocation}""/> ");
+                sb.AppendLine($@"        <MoveTo XYZ=""{PlayerLocation}""/> ");
             }
             else
             {
-                sb.AppendLine($@"      <GetTo ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}""/>  ");
+                sb.AppendLine($@"        <GetTo ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}""/>  ");
             }
 
             if (NoMount)
             {
-                sb.AppendLine($@"      <RunCode Name=""TurnOnMount"" />");
+                sb.AppendLine($@"        <RunCode Name=""TurnOnMount"" />");
             }
 
             return sb.ToString();
