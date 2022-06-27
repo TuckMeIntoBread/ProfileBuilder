@@ -780,7 +780,7 @@ namespace ProfileDevelopment
                     sb.Append(TeleportTo);
                 }
 
-                sb.AppendLine($@"        <FlyTo ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}"" Land=""True""/> ");
+                sb.AppendLine($@"        <FlyTo AllowedVariance=""1"" ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}"" Land=""True""/> ");
             }
             else if (MoveToOnly)
             {
