@@ -323,7 +323,7 @@ namespace ProfileDevelopment
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
                     str += GetToString();
-                    str += $@"  <UseTransport NpcId=""{Core.Target.NpcId}"" InteractDistance=""3.0"" XYZ=""{TargetLocation}""/>";
+                    str += $@"  <UseTransport NpcId=""{Core.Target.NpcId}"" InteractDistance=""3.0"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}""/>";
                 }
                 await Output(str);
             }
