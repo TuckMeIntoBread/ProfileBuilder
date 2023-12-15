@@ -66,6 +66,7 @@
             this.btnQuestStepGt0 = new System.Windows.Forms.Button();
             this.btnCloseIf = new System.Windows.Forms.Button();
             this.btnEmoteNPC = new System.Windows.Forms.Button();
+            this.grindButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cBoxActiveQuests
@@ -225,9 +226,7 @@
             this.btnUseObject.Size = new System.Drawing.Size(137, 23);
             this.btnUseObject.TabIndex = 11;
             this.btnUseObject.Text = "UseObject";
-            this.FormToolTip.SetToolTip(this.btnUseObject, "FlyTo location will be your current location, be sure to be in an appropriate pla" +
-        "ce before pressing. Clears all saved GameObjects on execution. Assign Objects wi" +
-        "th the Add GameObject button.");
+            this.FormToolTip.SetToolTip(this.btnUseObject, "FlyTo location will be your current location, be sure to be in an appropriate pla" + "ce before pressing. Clears all saved GameObjects on execution. Assign Objects wi" + "th the Add GameObject button.");
             this.btnUseObject.UseVisualStyleBackColor = true;
             this.btnUseObject.Click += new System.EventHandler(this.BtnUseObject_Click);
             // 
@@ -302,6 +301,8 @@
             // cBoxClipboard
             // 
             this.cBoxClipboard.AutoSize = true;
+            this.cBoxClipboard.Checked = true;
+            this.cBoxClipboard.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cBoxClipboard.Location = new System.Drawing.Point(444, 40);
             this.cBoxClipboard.Name = "cBoxClipboard";
             this.cBoxClipboard.Size = new System.Drawing.Size(109, 17);
@@ -429,11 +430,22 @@
             this.btnEmoteNPC.UseVisualStyleBackColor = true;
             this.btnEmoteNPC.Click += new System.EventHandler(this.BtnEmoteNPC_Click);
             // 
+            // grindButton
+            // 
+            this.grindButton.Location = new System.Drawing.Point(290, 438);
+            this.grindButton.Name = "grindButton";
+            this.grindButton.Size = new System.Drawing.Size(137, 23);
+            this.grindButton.TabIndex = 94;
+            this.grindButton.Text = "GrindArea";
+            this.grindButton.UseVisualStyleBackColor = true;
+            this.grindButton.Click += new System.EventHandler(this.grindButton_Click);
+            // 
             // Gui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(777, 832);
+            this.Controls.Add(this.grindButton);
             this.Controls.Add(this.cBoxNoMount);
             this.Controls.Add(this.cBoxUseQuestInfo);
             this.Controls.Add(this.btnEmoteNPC);
@@ -475,6 +487,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Button grindButton;
 
         private System.Windows.Forms.CheckBox cBoxUseQuestInfo;
 

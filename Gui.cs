@@ -11,6 +11,7 @@ using ff14bot.Behavior;
 using ff14bot.Enums;
 using ff14bot.Helpers;
 using ff14bot.Managers;
+using ff14bot.Objects;
 using ff14bot.RemoteWindows;
 using static Helpers.General;
 
@@ -38,7 +39,6 @@ namespace ProfileDevelopment
 
         private void Gui_Load(object sender, EventArgs e)
         {
-
         }
 
         private void CBoxActiveQuests_SelectedIndexChanged(object sender, EventArgs e)
@@ -102,19 +102,25 @@ namespace ProfileDevelopment
                 {
                     if (quests.Length > 0)
                     {
-                        cBoxActiveQuests.SelectedItem = quests.FirstOrDefault(r => r.GlobalId == selectedQuest.GlobalId) ?? quests[0];
+                        cBoxActiveQuests.SelectedItem =
+                            quests.FirstOrDefault(r => r.GlobalId == selectedQuest.GlobalId) ?? quests[0];
                     }
                 }
 
                 //refresh KeyItems
-                lbKeyItems.DataSource = InventoryManager.GetBagByInventoryBagId(InventoryBagId.KeyItems).FilledSlots.OrderBy(s => s.Name).ToList();
+                lbKeyItems.DataSource = InventoryManager.GetBagByInventoryBagId(InventoryBagId.KeyItems).FilledSlots
+                    .OrderBy(s => s.Name).ToList();
                 lbKeyItems.DisplayMember = "Name";
                 lbKeyItems.ValueMember = "Name";
                 lbKeyItems.SelectedItem = null;
 
-                InventoryBagId[] theseBags = new[] { InventoryBagId.Bag1, InventoryBagId.Bag2, InventoryBagId.Bag3, InventoryBagId.Bag4 };
+                InventoryBagId[] theseBags = new[]
+                {
+                    InventoryBagId.Bag1, InventoryBagId.Bag2, InventoryBagId.Bag3, InventoryBagId.Bag4
+                };
                 // refresh InventoryItems
-                lbInventory.DataSource = InventoryManager.FilledSlots.Where(r => theseBags.Contains(r.BagId)).OrderBy(s => s.Name).ToList();
+                lbInventory.DataSource = InventoryManager.FilledSlots.Where(r => theseBags.Contains(r.BagId))
+                    .OrderBy(s => s.Name).ToList();
                 lbInventory.DisplayMember = "Name";
                 lbInventory.ValueMember = "Name";
                 lbInventory.SelectedItem = null;
@@ -131,6 +137,7 @@ namespace ProfileDevelopment
         #region Set Output File
 
         public static string OutputFilePath;
+
         private void BtnOutput_Click(object sender, EventArgs e)
         {
             string path = $"{JsonSettings.AssemblyPath}\\Profiles";
@@ -177,9 +184,11 @@ namespace ProfileDevelopment
 
         private static string LisbethAreaNull => LisbethArea.Length < 1 ? WorldManager.CurrentZoneName : LisbethArea;
 
-        private static string PlayerLocation => Core.Me.Location.ToString().Remove(0, 1).Remove(Core.Me.Location.ToString().Remove(0, 1).Length - 1, 1);
+        private static string PlayerLocation => Core.Me.Location.ToString().Remove(0, 1)
+            .Remove(Core.Me.Location.ToString().Remove(0, 1).Length - 1, 1);
 
-        private static string TargetLocation => Core.Target.Location.ToString().Remove(0, 1).Remove(Core.Target.Location.ToString().Remove(0, 1).Length - 1, 1);
+        private static string TargetLocation => Core.Target.Location.ToString().Remove(0, 1)
+            .Remove(Core.Target.Location.ToString().Remove(0, 1).Length - 1, 1);
 
         public static string ZoneId => WorldManager.ZoneId.ToString();
 
@@ -193,15 +202,22 @@ namespace ProfileDevelopment
                 {
                     ushort _currentZoneId = WorldManager.ZoneId;
                     List<Tuple<uint, Vector3>> _availableLocations = new List<Tuple<uint, Vector3>>();
-                    foreach (WorldManager.TeleportLocation t in WorldManager.AvailableLocations.Where(z => z.ZoneId == _currentZoneId))
+                    foreach (WorldManager.TeleportLocation t in WorldManager.AvailableLocations.Where(z =>
+                                 z.ZoneId == _currentZoneId))
                     {
-                        _availableLocations.Add(WorldManager.AetheryteIdsForZone(_currentZoneId).Where(al => al.Item1 == t.AetheryteId).FirstOrDefault());
+                        _availableLocations.Add(WorldManager.AetheryteIdsForZone(_currentZoneId)
+                            .Where(al => al.Item1 == t.AetheryteId).FirstOrDefault());
                     }
 
-                    uint _closestAetheryteId = _availableLocations.OrderBy(loc => Core.Me.Location.Distance2D(loc.Item2)).FirstOrDefault().Item1;
-                    string _closestAetheryteName = WorldManager.AvailableLocations.Where(r => r.ZoneId == _currentZoneId && r.AetheryteId == _closestAetheryteId).FirstOrDefault().Name;
+                    uint _closestAetheryteId = _availableLocations
+                        .OrderBy(loc => Core.Me.Location.Distance2D(loc.Item2)).FirstOrDefault().Item1;
+                    string _closestAetheryteName = WorldManager.AvailableLocations
+                        .Where(r => r.ZoneId == _currentZoneId && r.AetheryteId == _closestAetheryteId).FirstOrDefault()
+                        .Name;
 
-                    return $@"    <TeleportTo Name=""{_closestAetheryteName}"" AetheryteId=""{_closestAetheryteId}""/>" + "\n";
+                    return
+                        $@"    <TeleportTo Name=""{_closestAetheryteName}"" AetheryteId=""{_closestAetheryteId}""/>" +
+                        "\n";
                 }
                 catch
                 {
@@ -216,15 +232,24 @@ namespace ProfileDevelopment
             {
                 List<uint> itemIds = new List<uint>();
                 foreach (BagSlot item in lbKeyItems.SelectedItems.Cast<BagSlot>())
-                { itemIds.Add(item.RawItemId); }
+                {
+                    itemIds.Add(item.RawItemId);
+                }
+
                 foreach (BagSlot item in lbInventory.SelectedItems.Cast<BagSlot>())
-                { itemIds.Add(item.RawItemId); }
+                {
+                    itemIds.Add(item.RawItemId);
+                }
 
                 string result = " ";
                 if (itemIds.Count == 1)
-                { result = $@" ItemId=""{itemIds.FirstOrDefault()}"" "; }
+                {
+                    result = $@" ItemId=""{itemIds.FirstOrDefault()}"" ";
+                }
                 else if (itemIds.Count > 1)
-                { result = $@" ItemIds=""{string.Join(",", itemIds)}"" "; }
+                {
+                    result = $@" ItemIds=""{string.Join(",", itemIds)}"" ";
+                }
 
                 return result;
             }
@@ -280,7 +305,8 @@ namespace ProfileDevelopment
                 {
                     str = $@"      <If Condition=""GetQuestStep({q.GlobalId}) == 255"">" + "\n";
                     str += GetToString();
-                    str += $@"        <TurnIn{ItemIdString}QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}""/>
+                    str +=
+                        $@"        <TurnIn{ItemIdString}QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}""/>
       </If>";
                     UpdatePosition();
                     await Output(str);
@@ -302,7 +328,8 @@ namespace ProfileDevelopment
                 {
                     str = $@"      <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
-                    str += $@"        <TalkTo NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
+                    str +=
+                        $@"        <TalkTo NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
       </If>";
                     UpdatePosition();
                     await Output(str);
@@ -323,8 +350,10 @@ namespace ProfileDevelopment
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
                     str += GetToString();
-                    str += $@"  <UseTransport NpcId=""{Core.Target.NpcId}"" InteractDistance=""3.0"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}""/>";
+                    str +=
+                        $@"  <UseTransport NpcId=""{Core.Target.NpcId}"" InteractDistance=""3.0"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}""/>";
                 }
+
                 await Output(str);
             }
         }
@@ -343,7 +372,8 @@ namespace ProfileDevelopment
                 {
                     str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
-                    str += $@"      <HandOver{ItemIdString}NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
+                    str +=
+                        $@"      <HandOver{ItemIdString}NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
     </If>";
                     UpdatePosition();
                     await Output(str);
@@ -359,12 +389,15 @@ namespace ProfileDevelopment
         {
             if (_gameObjects == null || _gameObjects.Count == 0)
             {
-                return $@"<UseObject NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
+                return
+                    $@"<UseObject NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
             }
+
             Dictionary<uint, string> objs = new Dictionary<uint, string>();
             foreach (ObjectData obj in _gameObjects)
             {
-                objs.Add(obj.NpcId, obj.Location.ToString().Remove(0, 1).Remove(obj.Location.ToString().Remove(0, 1).Length - 1, 1));
+                objs.Add(obj.NpcId,
+                    obj.Location.ToString().Remove(0, 1).Remove(obj.Location.ToString().Remove(0, 1).Length - 1, 1));
             }
 
             objs.OrderBy(r => r.Key);
@@ -373,14 +406,16 @@ namespace ProfileDevelopment
             string result = string.Empty;
             if (objs.Count == 1)
             {
-                result = $@"<UseObject NpcId=""{objs.FirstOrDefault().Key}"" XYZ=""{objs.FirstOrDefault().Value}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
+                result =
+                    $@"<UseObject NpcId=""{objs.FirstOrDefault().Key}"" XYZ=""{objs.FirstOrDefault().Value}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
             }
             else if (objs.Count > 1)
             {
                 foreach (KeyValuePair<uint, string> obj in objs)
                 {
                     Vector3 _objLoc = new Vector3(obj.Value);
-                    if ((_objLoc.X > Core.Me.X - 50 && _objLoc.X < Core.Me.X + 50) && (_objLoc.Z > Core.Me.Z - 50 && _objLoc.Z < Core.Me.Z + 50))
+                    if ((_objLoc.X > Core.Me.X - 50 && _objLoc.X < Core.Me.X + 50) &&
+                        (_objLoc.Z > Core.Me.Z - 50 && _objLoc.Z < Core.Me.Z + 50))
                     {
                         withinRadius = true;
                     }
@@ -388,7 +423,8 @@ namespace ProfileDevelopment
 
                 if (withinRadius)
                 {
-                    result = $@"<UseObject NpcIds=""{string.Join(",", objs.Keys.ToArray())}"" XYZ=""{PlayerLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
+                    result =
+                        $@"<UseObject NpcIds=""{string.Join(",", objs.Keys.ToArray())}"" XYZ=""{PlayerLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
                 }
                 else
                 {
@@ -399,7 +435,8 @@ namespace ProfileDevelopment
 ");
                     }
 
-                    result = $@"<UseObject NpcIds=""{string.Join(",", objs.Keys.ToArray())}"" QuestId=""{questId}"" StepId=""{stepId}"">
+                    result =
+                        $@"<UseObject NpcIds=""{string.Join(",", objs.Keys.ToArray())}"" QuestId=""{questId}"" StepId=""{stepId}"">
         <HotSpots>
 {string.Join("", hotSpots).TrimEnd()}
         </HotSpots>
@@ -435,6 +472,56 @@ namespace ProfileDevelopment
 
         #endregion UseObject
 
+        private string GetGrindAreaString(int stepId, int questId)
+        {
+            var units = GameObjectManager.GetObjectsOfType<BattleCharacter>().Where(x => x.IsTargetable && x.CanAttack).GroupBy(x => x.NpcId).Select(grp => grp.FirstOrDefault());
+            StringBuilder sb = new StringBuilder();
+            sb.Append($@"    <GrindArea name=""{questId}"">
+      <Hotspots>
+        <Hotspot Radius=""200"" XYZ=""");
+            sb.Append(Core.Me.Location.ToString().Trim('<', '>'));
+            sb.Append(@""" name=""Name""/>
+      </Hotspots>
+      <TargetMobs>" + "\r\n");
+            foreach(var unit in units.OrderBy(r=>r.Distance()))
+            {
+                sb.Append(@"        <TargetMob Id=""");
+                sb.Append(unit.NpcId.ToString());
+                sb.Append(@""" Weight=""1""/> <!-- ");
+                sb.Append(unit.Name.ToString());
+                sb.Append(@" -->" + "\r\n");
+            }
+            sb.Append(@"      </TargetMobs>
+    </GrindArea>");
+
+
+            return sb.ToString();
+        }
+
+        #region GrindArea
+
+        private async void grindButton_Click(object sender, EventArgs e)
+        {
+            using (Core.Memory.TemporaryCacheState(false))
+            {
+                ObjectManagerUpdate();
+                string str = string.Empty;
+                if (cBoxActiveQuests.SelectedItem is QuestWork q)
+                {
+                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
+                    str += GetToString();
+                    str += $@"<Grind grindRef=""{q.GlobalId}"" while=""GetQuestStep({q.GlobalId}) == {q.Step}"" />
+    </If>" + "\n";
+                    str += $@"{GetGrindAreaString(q.Step, q.GlobalId)}";
+                    _gameObjects.Clear();
+                    UpdatePosition();
+                    await Output(str);
+                }
+            }
+        }
+
+        #endregion
+
         #region UseItemString
 
         private string GetUseItemString(int stepId, int questId)
@@ -442,7 +529,8 @@ namespace ProfileDevelopment
             Dictionary<uint, string> objs = new Dictionary<uint, string>();
             foreach (ObjectData obj in _gameObjects)
             {
-                objs.Add(obj.NpcId, obj.Location.ToString().Remove(0, 1).Remove(obj.Location.ToString().Remove(0, 1).Length - 1, 1));
+                objs.Add(obj.NpcId,
+                    obj.Location.ToString().Remove(0, 1).Remove(obj.Location.ToString().Remove(0, 1).Length - 1, 1));
             }
 
             objs.OrderBy(r => r.Key);
@@ -452,7 +540,8 @@ namespace ProfileDevelopment
             if (objs.Count == 1)
             {
                 {
-                    result = $@"<UseItem{ItemIdString}NpcId=""{objs.FirstOrDefault().Key}"" XYZ=""{objs.FirstOrDefault().Value}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
+                    result =
+                        $@"<UseItem{ItemIdString}NpcId=""{objs.FirstOrDefault().Key}"" XYZ=""{objs.FirstOrDefault().Value}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
                 }
             }
             else if (objs.Count > 1)
@@ -460,7 +549,8 @@ namespace ProfileDevelopment
                 foreach (KeyValuePair<uint, string> obj in objs)
                 {
                     Vector3 _objLoc = new Vector3(obj.Value);
-                    if ((_objLoc.X > Core.Me.X - 50 && _objLoc.X < Core.Me.X + 50) && (_objLoc.Z > Core.Me.Z - 50 && _objLoc.Z < Core.Me.Z + 50))
+                    if ((_objLoc.X > Core.Me.X - 50 && _objLoc.X < Core.Me.X + 50) &&
+                        (_objLoc.Z > Core.Me.Z - 50 && _objLoc.Z < Core.Me.Z + 50))
                     {
                         withinRadius = true;
                     }
@@ -468,7 +558,8 @@ namespace ProfileDevelopment
 
                 if (withinRadius)
                 {
-                    result = $@"<UseItem{ItemIdString}NpcIds=""{string.Join(",", objs.Keys.ToArray())}"" XYZ=""{PlayerLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
+                    result =
+                        $@"<UseItem{ItemIdString}NpcIds=""{string.Join(",", objs.Keys.ToArray())}"" XYZ=""{PlayerLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
                 }
                 else
                 {
@@ -478,7 +569,9 @@ namespace ProfileDevelopment
                         hotSpots.Add($@"          <HotSpot XYZ=""{loc}"" Radius=""10""/>
 ");
                     }
-                    result = $@"<UseItem{ItemIdString}NpcIds=""{string.Join(",", objs.Keys.ToArray())}"" QuestId=""{questId}"" StepId=""{stepId}"">
+
+                    result =
+                        $@"<UseItem{ItemIdString}NpcIds=""{string.Join(",", objs.Keys.ToArray())}"" QuestId=""{questId}"" StepId=""{stepId}"">
         <HotSpots>
 {string.Join("", hotSpots).TrimEnd()}
         </HotSpots>
@@ -574,7 +667,10 @@ namespace ProfileDevelopment
                 Vector3 startPos = Core.Me.Location;
                 uint npcId = GameObjectManager.Target.NpcId;
                 GameObjectManager.Target.Interact();
-                await WaitUntil(() => (SelectYesno.IsOpen || SelectString.IsOpen || SelectIconString.IsOpen || Talk.DialogOpen || JournalAccept.IsOpen || QuestLogManager.InCutscene || CommonBehaviors.IsLoading), timeout: 8000);
+                await WaitUntil(
+                    () => (SelectYesno.IsOpen || SelectString.IsOpen || SelectIconString.IsOpen || Talk.DialogOpen ||
+                           JournalAccept.IsOpen || QuestLogManager.InCutscene || CommonBehaviors.IsLoading),
+                    timeout: 8000);
                 await SmallTalk();
                 string endArea = LisbethAreaNull;
                 Vector3 endPos = Core.Me.Location;
@@ -600,9 +696,12 @@ namespace ProfileDevelopment
                 str += $@"{whitespace}""Name"": ""Entrance to {endArea}""," + "\n";
                 str += $@"{whitespace}""Npc"": {npcId}," + "\n";
                 str += $@"{whitespace}""StartArea"": ""{startArea}""," + "\n";
-                str += $@"{whitespace}""StartPosition"": {{""X"": {startPos.X}, ""Y"": {startPos.Y}, ""Z"": {startPos.Z}}}," + "\n";
+                str +=
+                    $@"{whitespace}""StartPosition"": {{""X"": {startPos.X}, ""Y"": {startPos.Y}, ""Z"": {startPos.Z}}}," +
+                    "\n";
                 str += $@"{whitespace}""EndArea"": ""{endArea}""," + "\n";
-                str += $@"{whitespace}""EndPosition"": {{""X"": {endPos.X}, ""Y"": {endPos.Y}, ""Z"": {endPos.Z}}}" + "\n";
+                str += $@"{whitespace}""EndPosition"": {{""X"": {endPos.X}, ""Y"": {endPos.Y}, ""Z"": {endPos.Z}}}" +
+                       "\n";
                 str += "  },";
 
                 await Output(str);
@@ -620,7 +719,10 @@ namespace ProfileDevelopment
                 Vector3 startPos = Core.Me.Location;
                 uint npcId = GameObjectManager.Target.NpcId;
                 GameObjectManager.Target.Interact();
-                await WaitUntil(() => (SelectYesno.IsOpen || SelectString.IsOpen || SelectIconString.IsOpen || Talk.DialogOpen || JournalAccept.IsOpen || QuestLogManager.InCutscene || CommonBehaviors.IsLoading), timeout: 8000);
+                await WaitUntil(
+                    () => (SelectYesno.IsOpen || SelectString.IsOpen || SelectIconString.IsOpen || Talk.DialogOpen ||
+                           JournalAccept.IsOpen || QuestLogManager.InCutscene || CommonBehaviors.IsLoading),
+                    timeout: 8000);
                 await SmallTalk();
                 string endArea = LisbethAreaNull;
                 Vector3 endPos = Core.Me.Location;
@@ -630,9 +732,12 @@ namespace ProfileDevelopment
                 str += $@"{whitespace}""Name"": ""Exit from {startArea}""," + "\n";
                 str += $@"{whitespace}""Npc"": {npcId}," + "\n";
                 str += $@"{whitespace}""StartArea"": ""{startArea}""," + "\n";
-                str += $@"{whitespace}""StartPosition"": {{""X"": {startPos.X}, ""Y"": {startPos.Y}, ""Z"": {startPos.Z}}}," + "\n";
+                str +=
+                    $@"{whitespace}""StartPosition"": {{""X"": {startPos.X}, ""Y"": {startPos.Y}, ""Z"": {startPos.Z}}}," +
+                    "\n";
                 str += $@"{whitespace}""EndArea"": ""{endArea}""," + "\n";
-                str += $@"{whitespace}""EndPosition"": {{""X"": {endPos.X}, ""Y"": {endPos.Y}, ""Z"": {endPos.Z}}}" + "\n";
+                str += $@"{whitespace}""EndPosition"": {{""X"": {endPos.X}, ""Y"": {endPos.Y}, ""Z"": {endPos.Z}}}" +
+                       "\n";
                 str += "  },";
 
                 await Output(str);
@@ -703,6 +808,7 @@ namespace ProfileDevelopment
             {
                 Value = value;
             }
+
             public QuestWork Value { get; set; }
 
             public override string ToString()
@@ -711,7 +817,7 @@ namespace ProfileDevelopment
             }
         }
 
-        #endregion  Quest Wrapper
+        #endregion Quest Wrapper
 
         private async Task Output(string str)
         {
@@ -734,7 +840,9 @@ namespace ProfileDevelopment
             _lastLocationId = WorldManager.ZoneId;
         }
 
-        private bool DistanceCheck => IsForceGetTo || _lastLocation == Vector3.Zero || _lastLocationId == null || _lastLocationId != WorldManager.ZoneId || Core.Me.Distance(_lastLocation) > _distanceCheck;
+        private bool DistanceCheck => IsForceGetTo || _lastLocation == Vector3.Zero || _lastLocationId == null ||
+                                      _lastLocationId != WorldManager.ZoneId ||
+                                      Core.Me.Distance(_lastLocation) > _distanceCheck;
 
         private string GetToString()
         {
@@ -747,7 +855,7 @@ namespace ProfileDevelopment
             {
                 return NonLisbethMoveString();
             }
- 
+
             if (!IsLisbethOptional)
             {
                 return $@"        <LisbethTravel ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}""/> " + "\n";
@@ -774,13 +882,13 @@ namespace ProfileDevelopment
 
             if (IsFlightEnabled && WorldManager.CanFly)
             {
-
                 if (_lastLocationId != WorldManager.ZoneId)
                 {
                     sb.Append(TeleportTo);
                 }
 
-                sb.AppendLine($@"        <FlyTo AllowedVariance=""1"" ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}"" Land=""True""/> ");
+                sb.AppendLine(
+                    $@"        <FlyTo AllowedVariance=""1"" ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}"" Land=""True""/> ");
             }
             else if (MoveToOnly)
             {
@@ -823,8 +931,10 @@ namespace ProfileDevelopment
         {
             string emote = "greet"; // TODO: Make selectable instead of post-editing XML file
 
-            return $@"<EmoteNPC Emote=""{emote}"" NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
+            return
+                $@"<EmoteNPC Emote=""{emote}"" NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
         }
+
         #endregion EmoteNPC
     }
 
