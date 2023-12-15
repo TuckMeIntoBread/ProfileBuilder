@@ -30,6 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Gui));
+            this.FormToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnUseObject = new System.Windows.Forms.Button();
+            this.btnUseItem = new System.Windows.Forms.Button();
+            this.cBoxFlight = new System.Windows.Forms.CheckBox();
+            this.CheckBoxTopMost = new System.Windows.Forms.CheckBox();
+            this.btnTeleportTo = new System.Windows.Forms.Button();
+            this.cBoxLisbeth = new System.Windows.Forms.CheckBox();
+            this.cBoxClipboard = new System.Windows.Forms.CheckBox();
+            this.cBoxForceGetTo = new System.Windows.Forms.CheckBox();
+            this.cBoxMoveTo = new System.Windows.Forms.CheckBox();
+            this.cBoxLisOptional = new System.Windows.Forms.CheckBox();
+            this.cBoxUseQuestInfo = new System.Windows.Forms.CheckBox();
+            this.cBoxNoMount = new System.Windows.Forms.CheckBox();
             this.cBoxActiveQuests = new System.Windows.Forms.ComboBox();
             this.pGridQuestData = new System.Windows.Forms.PropertyGrid();
             this.btnRefresh = new System.Windows.Forms.Button();
@@ -46,28 +59,160 @@
             this.btnOpenProfileTags = new System.Windows.Forms.Button();
             this.labelInventory = new System.Windows.Forms.Label();
             this.lbInventory = new System.Windows.Forms.ListBox();
-            this.btnUseObject = new System.Windows.Forms.Button();
             this.btnAddGameObject = new System.Windows.Forms.Button();
-            this.btnUseItem = new System.Windows.Forms.Button();
-            this.FormToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.cBoxFlight = new System.Windows.Forms.CheckBox();
-            this.CheckBoxTopMost = new System.Windows.Forms.CheckBox();
-            this.btnTeleportTo = new System.Windows.Forms.Button();
-            this.cBoxLisbeth = new System.Windows.Forms.CheckBox();
-            this.cBoxClipboard = new System.Windows.Forms.CheckBox();
-            this.cBoxForceGetTo = new System.Windows.Forms.CheckBox();
-            this.cBoxMoveTo = new System.Windows.Forms.CheckBox();
-            this.cBoxLisOptional = new System.Windows.Forms.CheckBox();
-            this.cBoxNoMount = new System.Windows.Forms.CheckBox();
-            this.cBoxUseQuestInfo = new System.Windows.Forms.CheckBox();
-            this.btnLisbethJSONEntrance = new System.Windows.Forms.Button();
-            this.btnLisbethJSONExit = new System.Windows.Forms.Button();
             this.btnQuestStep = new System.Windows.Forms.Button();
             this.btnQuestStepGt0 = new System.Windows.Forms.Button();
             this.btnCloseIf = new System.Windows.Forms.Button();
+            this.btnLisbethJSONEntrance = new System.Windows.Forms.Button();
+            this.btnLisbethJSONExit = new System.Windows.Forms.Button();
             this.btnEmoteNPC = new System.Windows.Forms.Button();
             this.grindButton = new System.Windows.Forms.Button();
+            this.cBoxObjective0 = new System.Windows.Forms.CheckBox();
+            this.cBoxObjective1 = new System.Windows.Forms.CheckBox();
+            this.cBoxObjective2 = new System.Windows.Forms.CheckBox();
+            this.cBoxObjective3 = new System.Windows.Forms.CheckBox();
+            this.cBoxObjective4 = new System.Windows.Forms.CheckBox();
+            this.cBoxObjective5 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
+            // 
+            // btnUseObject
+            // 
+            this.btnUseObject.Location = new System.Drawing.Point(290, 316);
+            this.btnUseObject.Name = "btnUseObject";
+            this.btnUseObject.Size = new System.Drawing.Size(137, 23);
+            this.btnUseObject.TabIndex = 11;
+            this.btnUseObject.Text = "UseObject";
+            this.FormToolTip.SetToolTip(this.btnUseObject, "FlyTo location will be your current location, be sure to be in an appropriate pla" + "ce before pressing. Clears all saved GameObjects on execution. Assign Objects wi" + "th the Add GameObject button.");
+            this.btnUseObject.UseVisualStyleBackColor = true;
+            this.btnUseObject.Click += new System.EventHandler(this.BtnUseObject_Click);
+            // 
+            // btnUseItem
+            // 
+            this.btnUseItem.Location = new System.Drawing.Point(290, 348);
+            this.btnUseItem.Name = "btnUseItem";
+            this.btnUseItem.Size = new System.Drawing.Size(137, 23);
+            this.btnUseItem.TabIndex = 12;
+            this.btnUseItem.Text = "Use Item";
+            this.FormToolTip.SetToolTip(this.btnUseItem, resources.GetString("btnUseItem.ToolTip"));
+            this.btnUseItem.UseVisualStyleBackColor = true;
+            this.btnUseItem.Click += new System.EventHandler(this.BtnUseItem_Click);
+            // 
+            // cBoxFlight
+            // 
+            this.cBoxFlight.AutoSize = true;
+            this.cBoxFlight.Location = new System.Drawing.Point(281, 737);
+            this.cBoxFlight.Name = "cBoxFlight";
+            this.cBoxFlight.Size = new System.Drawing.Size(90, 17);
+            this.cBoxFlight.TabIndex = 22;
+            this.cBoxFlight.Text = "FlightEnabled";
+            this.FormToolTip.SetToolTip(this.cBoxFlight, "Uses Flightor FlyTo Tags in preference to GetTo");
+            this.cBoxFlight.UseVisualStyleBackColor = true;
+            // 
+            // CheckBoxTopMost
+            // 
+            this.CheckBoxTopMost.AutoSize = true;
+            this.CheckBoxTopMost.Location = new System.Drawing.Point(281, 803);
+            this.CheckBoxTopMost.Name = "CheckBoxTopMost";
+            this.CheckBoxTopMost.Size = new System.Drawing.Size(115, 17);
+            this.CheckBoxTopMost.TabIndex = 25;
+            this.CheckBoxTopMost.Text = "Set Always on Top";
+            this.FormToolTip.SetToolTip(this.CheckBoxTopMost, "Set always on top");
+            this.CheckBoxTopMost.UseVisualStyleBackColor = true;
+            this.CheckBoxTopMost.CheckedChanged += new System.EventHandler(this.SetTopMost_CheckedChanged);
+            // 
+            // btnTeleportTo
+            // 
+            this.btnTeleportTo.Location = new System.Drawing.Point(290, 124);
+            this.btnTeleportTo.Name = "btnTeleportTo";
+            this.btnTeleportTo.Size = new System.Drawing.Size(137, 23);
+            this.btnTeleportTo.TabIndex = 5;
+            this.btnTeleportTo.Text = "TeleportTo";
+            this.FormToolTip.SetToolTip(this.btnTeleportTo, resources.GetString("btnTeleportTo.ToolTip"));
+            this.btnTeleportTo.UseVisualStyleBackColor = true;
+            this.btnTeleportTo.Click += new System.EventHandler(this.BtnTeleportTo_Click);
+            // 
+            // cBoxLisbeth
+            // 
+            this.cBoxLisbeth.AutoSize = true;
+            this.cBoxLisbeth.Checked = true;
+            this.cBoxLisbeth.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cBoxLisbeth.Location = new System.Drawing.Point(281, 715);
+            this.cBoxLisbeth.Name = "cBoxLisbeth";
+            this.cBoxLisbeth.Size = new System.Drawing.Size(90, 17);
+            this.cBoxLisbeth.TabIndex = 20;
+            this.cBoxLisbeth.Text = "LisbethTravel";
+            this.FormToolTip.SetToolTip(this.cBoxLisbeth, "Uses LisbethTravel tags in preference to GetTo");
+            this.cBoxLisbeth.UseVisualStyleBackColor = true;
+            // 
+            // cBoxClipboard
+            // 
+            this.cBoxClipboard.AutoSize = true;
+            this.cBoxClipboard.Checked = true;
+            this.cBoxClipboard.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cBoxClipboard.Location = new System.Drawing.Point(444, 40);
+            this.cBoxClipboard.Name = "cBoxClipboard";
+            this.cBoxClipboard.Size = new System.Drawing.Size(109, 17);
+            this.cBoxClipboard.TabIndex = 92;
+            this.cBoxClipboard.Text = "Copy to Clipboard";
+            this.FormToolTip.SetToolTip(this.cBoxClipboard, "Set always on top");
+            this.cBoxClipboard.UseVisualStyleBackColor = true;
+            // 
+            // cBoxForceGetTo
+            // 
+            this.cBoxForceGetTo.AutoSize = true;
+            this.cBoxForceGetTo.Checked = true;
+            this.cBoxForceGetTo.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cBoxForceGetTo.Location = new System.Drawing.Point(281, 759);
+            this.cBoxForceGetTo.Name = "cBoxForceGetTo";
+            this.cBoxForceGetTo.Size = new System.Drawing.Size(86, 17);
+            this.cBoxForceGetTo.TabIndex = 23;
+            this.cBoxForceGetTo.Text = "Force GetTo";
+            this.FormToolTip.SetToolTip(this.cBoxForceGetTo, "Forces LisbethTravel or GetTo regardless of distance check");
+            this.cBoxForceGetTo.UseVisualStyleBackColor = true;
+            // 
+            // cBoxMoveTo
+            // 
+            this.cBoxMoveTo.AutoSize = true;
+            this.cBoxMoveTo.Location = new System.Drawing.Point(281, 781);
+            this.cBoxMoveTo.Name = "cBoxMoveTo";
+            this.cBoxMoveTo.Size = new System.Drawing.Size(90, 17);
+            this.cBoxMoveTo.TabIndex = 24;
+            this.cBoxMoveTo.Text = "MoveTo Only";
+            this.FormToolTip.SetToolTip(this.cBoxMoveTo, "Uses only MoveTo tags for movement");
+            this.cBoxMoveTo.UseVisualStyleBackColor = true;
+            // 
+            // cBoxLisOptional
+            // 
+            this.cBoxLisOptional.AutoSize = true;
+            this.cBoxLisOptional.Location = new System.Drawing.Point(371, 715);
+            this.cBoxLisOptional.Name = "cBoxLisOptional";
+            this.cBoxLisOptional.Size = new System.Drawing.Size(65, 17);
+            this.cBoxLisOptional.TabIndex = 21;
+            this.cBoxLisOptional.Text = "Optional";
+            this.FormToolTip.SetToolTip(this.cBoxLisOptional, "Uses LisbethTravel tags in preference to GetTo");
+            this.cBoxLisOptional.UseVisualStyleBackColor = true;
+            // 
+            // cBoxUseQuestInfo
+            // 
+            this.cBoxUseQuestInfo.AutoSize = true;
+            this.cBoxUseQuestInfo.Location = new System.Drawing.Point(99, 40);
+            this.cBoxUseQuestInfo.Name = "cBoxUseQuestInfo";
+            this.cBoxUseQuestInfo.Size = new System.Drawing.Size(97, 17);
+            this.cBoxUseQuestInfo.TabIndex = 93;
+            this.cBoxUseQuestInfo.Text = "Use Quest Info";
+            this.FormToolTip.SetToolTip(this.cBoxUseQuestInfo, "Uses LisbethTravel tags in preference to GetTo");
+            this.cBoxUseQuestInfo.UseVisualStyleBackColor = true;
+            // 
+            // cBoxNoMount
+            // 
+            this.cBoxNoMount.AutoSize = true;
+            this.cBoxNoMount.Location = new System.Drawing.Point(371, 782);
+            this.cBoxNoMount.Name = "cBoxNoMount";
+            this.cBoxNoMount.Size = new System.Drawing.Size(73, 17);
+            this.cBoxNoMount.TabIndex = 93;
+            this.cBoxNoMount.Text = "No Mount";
+            this.FormToolTip.SetToolTip(this.cBoxNoMount, "Disables mount during MoveTo");
+            this.cBoxNoMount.UseVisualStyleBackColor = true;
             // 
             // cBoxActiveQuests
             // 
@@ -83,7 +228,7 @@
             this.pGridQuestData.LineColor = System.Drawing.SystemColors.ControlDark;
             this.pGridQuestData.Location = new System.Drawing.Point(12, 40);
             this.pGridQuestData.Name = "pGridQuestData";
-            this.pGridQuestData.Size = new System.Drawing.Size(263, 780);
+            this.pGridQuestData.Size = new System.Drawing.Size(263, 734);
             this.pGridQuestData.TabIndex = 2;
             // 
             // btnRefresh
@@ -219,17 +364,6 @@
             this.lbInventory.TabIndex = 26;
             this.lbInventory.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LbInventory_MouseDown);
             // 
-            // btnUseObject
-            // 
-            this.btnUseObject.Location = new System.Drawing.Point(290, 316);
-            this.btnUseObject.Name = "btnUseObject";
-            this.btnUseObject.Size = new System.Drawing.Size(137, 23);
-            this.btnUseObject.TabIndex = 11;
-            this.btnUseObject.Text = "UseObject";
-            this.FormToolTip.SetToolTip(this.btnUseObject, "FlyTo location will be your current location, be sure to be in an appropriate pla" + "ce before pressing. Clears all saved GameObjects on execution. Assign Objects wi" + "th the Add GameObject button.");
-            this.btnUseObject.UseVisualStyleBackColor = true;
-            this.btnUseObject.Click += new System.EventHandler(this.BtnUseObject_Click);
-            // 
             // btnAddGameObject
             // 
             this.btnAddGameObject.Location = new System.Drawing.Point(290, 284);
@@ -239,156 +373,6 @@
             this.btnAddGameObject.Text = "Add GameObject";
             this.btnAddGameObject.UseVisualStyleBackColor = true;
             this.btnAddGameObject.Click += new System.EventHandler(this.BtnAddGameObject_Click);
-            // 
-            // btnUseItem
-            // 
-            this.btnUseItem.Location = new System.Drawing.Point(290, 348);
-            this.btnUseItem.Name = "btnUseItem";
-            this.btnUseItem.Size = new System.Drawing.Size(137, 23);
-            this.btnUseItem.TabIndex = 12;
-            this.btnUseItem.Text = "Use Item";
-            this.FormToolTip.SetToolTip(this.btnUseItem, resources.GetString("btnUseItem.ToolTip"));
-            this.btnUseItem.UseVisualStyleBackColor = true;
-            this.btnUseItem.Click += new System.EventHandler(this.BtnUseItem_Click);
-            // 
-            // cBoxFlight
-            // 
-            this.cBoxFlight.AutoSize = true;
-            this.cBoxFlight.Location = new System.Drawing.Point(281, 737);
-            this.cBoxFlight.Name = "cBoxFlight";
-            this.cBoxFlight.Size = new System.Drawing.Size(90, 17);
-            this.cBoxFlight.TabIndex = 22;
-            this.cBoxFlight.Text = "FlightEnabled";
-            this.FormToolTip.SetToolTip(this.cBoxFlight, "Uses Flightor FlyTo Tags in preference to GetTo");
-            this.cBoxFlight.UseVisualStyleBackColor = true;
-            // 
-            // CheckBoxTopMost
-            // 
-            this.CheckBoxTopMost.AutoSize = true;
-            this.CheckBoxTopMost.Location = new System.Drawing.Point(281, 803);
-            this.CheckBoxTopMost.Name = "CheckBoxTopMost";
-            this.CheckBoxTopMost.Size = new System.Drawing.Size(115, 17);
-            this.CheckBoxTopMost.TabIndex = 25;
-            this.CheckBoxTopMost.Text = "Set Always on Top";
-            this.FormToolTip.SetToolTip(this.CheckBoxTopMost, "Set always on top");
-            this.CheckBoxTopMost.UseVisualStyleBackColor = true;
-            this.CheckBoxTopMost.CheckedChanged += new System.EventHandler(this.SetTopMost_CheckedChanged);
-            // 
-            // btnTeleportTo
-            // 
-            this.btnTeleportTo.Location = new System.Drawing.Point(290, 124);
-            this.btnTeleportTo.Name = "btnTeleportTo";
-            this.btnTeleportTo.Size = new System.Drawing.Size(137, 23);
-            this.btnTeleportTo.TabIndex = 5;
-            this.btnTeleportTo.Text = "TeleportTo";
-            this.FormToolTip.SetToolTip(this.btnTeleportTo, resources.GetString("btnTeleportTo.ToolTip"));
-            this.btnTeleportTo.UseVisualStyleBackColor = true;
-            this.btnTeleportTo.Click += new System.EventHandler(this.BtnTeleportTo_Click);
-            // 
-            // cBoxLisbeth
-            // 
-            this.cBoxLisbeth.AutoSize = true;
-            this.cBoxLisbeth.Checked = true;
-            this.cBoxLisbeth.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cBoxLisbeth.Location = new System.Drawing.Point(281, 715);
-            this.cBoxLisbeth.Name = "cBoxLisbeth";
-            this.cBoxLisbeth.Size = new System.Drawing.Size(90, 17);
-            this.cBoxLisbeth.TabIndex = 20;
-            this.cBoxLisbeth.Text = "LisbethTravel";
-            this.FormToolTip.SetToolTip(this.cBoxLisbeth, "Uses LisbethTravel tags in preference to GetTo");
-            this.cBoxLisbeth.UseVisualStyleBackColor = true;
-            // 
-            // cBoxClipboard
-            // 
-            this.cBoxClipboard.AutoSize = true;
-            this.cBoxClipboard.Checked = true;
-            this.cBoxClipboard.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cBoxClipboard.Location = new System.Drawing.Point(444, 40);
-            this.cBoxClipboard.Name = "cBoxClipboard";
-            this.cBoxClipboard.Size = new System.Drawing.Size(109, 17);
-            this.cBoxClipboard.TabIndex = 92;
-            this.cBoxClipboard.Text = "Copy to Clipboard";
-            this.FormToolTip.SetToolTip(this.cBoxClipboard, "Set always on top");
-            this.cBoxClipboard.UseVisualStyleBackColor = true;
-            // 
-            // cBoxForceGetTo
-            // 
-            this.cBoxForceGetTo.AutoSize = true;
-            this.cBoxForceGetTo.Checked = true;
-            this.cBoxForceGetTo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cBoxForceGetTo.Location = new System.Drawing.Point(281, 759);
-            this.cBoxForceGetTo.Name = "cBoxForceGetTo";
-            this.cBoxForceGetTo.Size = new System.Drawing.Size(86, 17);
-            this.cBoxForceGetTo.TabIndex = 23;
-            this.cBoxForceGetTo.Text = "Force GetTo";
-            this.FormToolTip.SetToolTip(this.cBoxForceGetTo, "Forces LisbethTravel or GetTo regardless of distance check");
-            this.cBoxForceGetTo.UseVisualStyleBackColor = true;
-            // 
-            // cBoxMoveTo
-            // 
-            this.cBoxMoveTo.AutoSize = true;
-            this.cBoxMoveTo.Location = new System.Drawing.Point(281, 781);
-            this.cBoxMoveTo.Name = "cBoxMoveTo";
-            this.cBoxMoveTo.Size = new System.Drawing.Size(90, 17);
-            this.cBoxMoveTo.TabIndex = 24;
-            this.cBoxMoveTo.Text = "MoveTo Only";
-            this.FormToolTip.SetToolTip(this.cBoxMoveTo, "Uses only MoveTo tags for movement");
-            this.cBoxMoveTo.UseVisualStyleBackColor = true;
-            // 
-            // cBoxLisOptional
-            // 
-            this.cBoxLisOptional.AutoSize = true;
-            this.cBoxLisOptional.Location = new System.Drawing.Point(371, 715);
-            this.cBoxLisOptional.Name = "cBoxLisOptional";
-            this.cBoxLisOptional.Size = new System.Drawing.Size(65, 17);
-            this.cBoxLisOptional.TabIndex = 21;
-            this.cBoxLisOptional.Text = "Optional";
-            this.FormToolTip.SetToolTip(this.cBoxLisOptional, "Uses LisbethTravel tags in preference to GetTo");
-            this.cBoxLisOptional.UseVisualStyleBackColor = true;
-            // 
-            // cBoxNoMount
-            // 
-            this.cBoxNoMount.AutoSize = true;
-            this.cBoxNoMount.Location = new System.Drawing.Point(371, 782);
-            this.cBoxNoMount.Name = "cBoxNoMount";
-            this.cBoxNoMount.Size = new System.Drawing.Size(73, 17);
-            this.cBoxNoMount.TabIndex = 93;
-            this.cBoxNoMount.Text = "No Mount";
-            this.FormToolTip.SetToolTip(this.cBoxNoMount, "Disables mount during MoveTo");
-            this.cBoxNoMount.UseVisualStyleBackColor = true;
-            // 
-            // cBoxUseQuestInfo
-            // 
-            this.cBoxUseQuestInfo.AutoSize = true;
-            this.cBoxUseQuestInfo.Location = new System.Drawing.Point(99, 40);
-            this.cBoxUseQuestInfo.Name = "cBoxUseQuestInfo";
-            this.cBoxUseQuestInfo.Size = new System.Drawing.Size(97, 17);
-            this.cBoxUseQuestInfo.TabIndex = 93;
-            this.cBoxUseQuestInfo.Text = "Use Quest Info";
-            this.FormToolTip.SetToolTip(this.cBoxUseQuestInfo, "Uses LisbethTravel tags in preference to GetTo");
-            this.cBoxUseQuestInfo.UseVisualStyleBackColor = true;
-            // 
-            // btnLisbethJSONEntrance
-            // 
-            this.btnLisbethJSONEntrance.Location = new System.Drawing.Point(290, 536);
-            this.btnLisbethJSONEntrance.Name = "btnLisbethJSONEntrance";
-            this.btnLisbethJSONEntrance.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btnLisbethJSONEntrance.Size = new System.Drawing.Size(137, 23);
-            this.btnLisbethJSONEntrance.TabIndex = 15;
-            this.btnLisbethJSONEntrance.Text = "Lisbeth JSON Entrance";
-            this.btnLisbethJSONEntrance.UseVisualStyleBackColor = true;
-            this.btnLisbethJSONEntrance.Click += new System.EventHandler(this.BtnLisbethJSONEntranceTo_Click);
-            // 
-            // btnLisbethJSONExit
-            // 
-            this.btnLisbethJSONExit.Location = new System.Drawing.Point(290, 565);
-            this.btnLisbethJSONExit.Name = "btnLisbethJSONExit";
-            this.btnLisbethJSONExit.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btnLisbethJSONExit.Size = new System.Drawing.Size(137, 23);
-            this.btnLisbethJSONExit.TabIndex = 16;
-            this.btnLisbethJSONExit.Text = "Lisbeth JSON Exit";
-            this.btnLisbethJSONExit.UseVisualStyleBackColor = true;
-            this.btnLisbethJSONExit.Click += new System.EventHandler(this.BtnLisbethJSONExitFrom_Click);
             // 
             // btnQuestStep
             // 
@@ -420,6 +404,28 @@
             this.btnCloseIf.UseVisualStyleBackColor = true;
             this.btnCloseIf.Click += new System.EventHandler(this.BtnCloseIf_Click);
             // 
+            // btnLisbethJSONEntrance
+            // 
+            this.btnLisbethJSONEntrance.Location = new System.Drawing.Point(290, 536);
+            this.btnLisbethJSONEntrance.Name = "btnLisbethJSONEntrance";
+            this.btnLisbethJSONEntrance.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnLisbethJSONEntrance.Size = new System.Drawing.Size(137, 23);
+            this.btnLisbethJSONEntrance.TabIndex = 15;
+            this.btnLisbethJSONEntrance.Text = "Lisbeth JSON Entrance";
+            this.btnLisbethJSONEntrance.UseVisualStyleBackColor = true;
+            this.btnLisbethJSONEntrance.Click += new System.EventHandler(this.BtnLisbethJSONEntranceTo_Click);
+            // 
+            // btnLisbethJSONExit
+            // 
+            this.btnLisbethJSONExit.Location = new System.Drawing.Point(290, 565);
+            this.btnLisbethJSONExit.Name = "btnLisbethJSONExit";
+            this.btnLisbethJSONExit.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnLisbethJSONExit.Size = new System.Drawing.Size(137, 23);
+            this.btnLisbethJSONExit.TabIndex = 16;
+            this.btnLisbethJSONExit.Text = "Lisbeth JSON Exit";
+            this.btnLisbethJSONExit.UseVisualStyleBackColor = true;
+            this.btnLisbethJSONExit.Click += new System.EventHandler(this.BtnLisbethJSONExitFrom_Click);
+            // 
             // btnEmoteNPC
             // 
             this.btnEmoteNPC.Location = new System.Drawing.Point(290, 409);
@@ -440,11 +446,80 @@
             this.grindButton.UseVisualStyleBackColor = true;
             this.grindButton.Click += new System.EventHandler(this.grindButton_Click);
             // 
+            // cBoxObjective0
+            // 
+            this.cBoxObjective0.AutoSize = true;
+            this.cBoxObjective0.Location = new System.Drawing.Point(13, 780);
+            this.cBoxObjective0.Name = "cBoxObjective0";
+            this.cBoxObjective0.Size = new System.Drawing.Size(80, 17);
+            this.cBoxObjective0.TabIndex = 95;
+            this.cBoxObjective0.Text = "Objective 0";
+            this.cBoxObjective0.UseVisualStyleBackColor = true;
+            // 
+            // cBoxObjective1
+            // 
+            this.cBoxObjective1.AutoSize = true;
+            this.cBoxObjective1.Location = new System.Drawing.Point(100, 780);
+            this.cBoxObjective1.Name = "cBoxObjective1";
+            this.cBoxObjective1.Size = new System.Drawing.Size(80, 17);
+            this.cBoxObjective1.TabIndex = 96;
+            this.cBoxObjective1.Text = "Objective 1";
+            this.cBoxObjective1.UseVisualStyleBackColor = true;
+            // 
+            // cBoxObjective2
+            // 
+            this.cBoxObjective2.AutoSize = true;
+            this.cBoxObjective2.Location = new System.Drawing.Point(186, 780);
+            this.cBoxObjective2.Name = "cBoxObjective2";
+            this.cBoxObjective2.Size = new System.Drawing.Size(80, 17);
+            this.cBoxObjective2.TabIndex = 97;
+            this.cBoxObjective2.Text = "Objective 2";
+            this.cBoxObjective2.UseVisualStyleBackColor = true;
+            // 
+            // cBoxObjective3
+            // 
+            this.cBoxObjective3.AutoSize = true;
+            this.cBoxObjective3.Location = new System.Drawing.Point(13, 803);
+            this.cBoxObjective3.Name = "cBoxObjective3";
+            this.cBoxObjective3.Size = new System.Drawing.Size(80, 17);
+            this.cBoxObjective3.TabIndex = 98;
+            this.cBoxObjective3.Text = "Objective 3";
+            this.cBoxObjective3.UseVisualStyleBackColor = true;
+            // 
+            // cBoxObjective4
+            // 
+            this.cBoxObjective4.AutoSize = true;
+            this.cBoxObjective4.Enabled = false;
+            this.cBoxObjective4.Location = new System.Drawing.Point(99, 803);
+            this.cBoxObjective4.Name = "cBoxObjective4";
+            this.cBoxObjective4.Size = new System.Drawing.Size(80, 17);
+            this.cBoxObjective4.TabIndex = 99;
+            this.cBoxObjective4.Text = "Objective 4";
+            this.cBoxObjective4.UseVisualStyleBackColor = true;
+            // 
+            // cBoxObjective5
+            // 
+            this.cBoxObjective5.AutoSize = true;
+            this.cBoxObjective5.Enabled = false;
+            this.cBoxObjective5.Location = new System.Drawing.Point(185, 803);
+            this.cBoxObjective5.Name = "cBoxObjective5";
+            this.cBoxObjective5.Size = new System.Drawing.Size(80, 17);
+            this.cBoxObjective5.TabIndex = 100;
+            this.cBoxObjective5.Text = "Objective 5";
+            this.cBoxObjective5.UseVisualStyleBackColor = true;
+            // 
             // Gui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(777, 832);
+            this.Controls.Add(this.cBoxObjective5);
+            this.Controls.Add(this.cBoxObjective4);
+            this.Controls.Add(this.cBoxObjective3);
+            this.Controls.Add(this.cBoxObjective2);
+            this.Controls.Add(this.cBoxObjective1);
+            this.Controls.Add(this.cBoxObjective0);
             this.Controls.Add(this.grindButton);
             this.Controls.Add(this.cBoxNoMount);
             this.Controls.Add(this.cBoxUseQuestInfo);
@@ -481,25 +556,14 @@
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.pGridQuestData);
             this.Controls.Add(this.cBoxActiveQuests);
+            this.Location = new System.Drawing.Point(15, 15);
             this.Name = "Gui";
-            this.Text = "Profile Development";
             this.Load += new System.EventHandler(this.Gui_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
         }
 
-        private System.Windows.Forms.Button grindButton;
-
-        private System.Windows.Forms.CheckBox cBoxUseQuestInfo;
-
-        private System.Windows.Forms.CheckBox cBoxLisOptional;
-
-        private System.Windows.Forms.CheckBox cBoxMoveTo;
-
-        private System.Windows.Forms.Button btnLisbethJSONEntrance;
-        private System.Windows.Forms.Button btnLisbethJSONExit;
-
-        #endregion
+        private System.Windows.Forms.CheckBox cBoxObjective5;
 
         private System.Windows.Forms.ComboBox cBoxActiveQuests;
         private System.Windows.Forms.PropertyGrid pGridQuestData;
@@ -520,7 +584,6 @@
         private System.Windows.Forms.Button btnUseObject;
         private System.Windows.Forms.Button btnAddGameObject;
         private System.Windows.Forms.Button btnUseItem;
-        private System.Windows.Forms.ToolTip FormToolTip;
         private System.Windows.Forms.CheckBox cBoxFlight;
         private System.Windows.Forms.CheckBox CheckBoxTopMost;
         private System.Windows.Forms.Button btnTeleportTo;
@@ -530,8 +593,23 @@
         private System.Windows.Forms.Button btnQuestStep;
         private System.Windows.Forms.Button btnQuestStepGt0;
         private System.Windows.Forms.Button btnCloseIf;
+        private System.Windows.Forms.Button btnLisbethJSONEntrance;
+        private System.Windows.Forms.Button btnLisbethJSONExit;
+        private System.Windows.Forms.CheckBox cBoxMoveTo;
+        private System.Windows.Forms.CheckBox cBoxLisOptional;
         private System.Windows.Forms.Button btnEmoteNPC;
+        private System.Windows.Forms.CheckBox cBoxUseQuestInfo;
         private System.Windows.Forms.CheckBox cBoxNoMount;
+        private System.Windows.Forms.Button grindButton;
+        private System.Windows.Forms.CheckBox cBoxObjective0;
+        private System.Windows.Forms.CheckBox cBoxObjective1;
+        private System.Windows.Forms.CheckBox cBoxObjective2;
+        private System.Windows.Forms.CheckBox cBoxObjective3;
+        private System.Windows.Forms.CheckBox cBoxObjective4;
+
+        #endregion
+
+        private System.Windows.Forms.ToolTip FormToolTip;
     }
 }
 

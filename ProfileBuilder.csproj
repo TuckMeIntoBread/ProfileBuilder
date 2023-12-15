@@ -79,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="QuestTodoInfo.cs" />
     <Compile Include="Gui.cs">
       <SubType>Form</SubType>
     </Compile>

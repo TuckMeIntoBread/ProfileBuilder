@@ -43,7 +43,21 @@ namespace ProfileDevelopment
 
         private void CBoxActiveQuests_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pGridQuestData.SelectedObject = cBoxActiveQuests.SelectedItem;
+            pGridQuestData.SelectedObject = cBoxActiveQuests.SelectedItem as QuestWork;
+            var questTodoInfo = new QuestTodoInfo((QuestWork)pGridQuestData.SelectedObject);
+
+            cBoxObjective0.Visible = questTodoInfo.Objective0TodoChecked != null;
+            cBoxObjective0.Checked = questTodoInfo.Objective0TodoChecked == true;
+            cBoxObjective1.Visible = questTodoInfo.Objective1TodoChecked != null;
+            cBoxObjective1.Checked = questTodoInfo.Objective1TodoChecked == true;
+            cBoxObjective2.Visible = questTodoInfo.Objective2TodoChecked != null;
+            cBoxObjective2.Checked = questTodoInfo.Objective2TodoChecked == true;
+            cBoxObjective3.Visible = questTodoInfo.Objective3TodoChecked != null;
+            cBoxObjective3.Checked = questTodoInfo.Objective3TodoChecked == true;
+            cBoxObjective4.Visible = questTodoInfo.Objective4TodoChecked != null;
+            cBoxObjective4.Checked = questTodoInfo.Objective4TodoChecked == true;
+            cBoxObjective5.Visible = questTodoInfo.Objective5TodoChecked != null;
+            cBoxObjective5.Checked = questTodoInfo.Objective5TodoChecked == true;
         }
 
         private void LbKeyItems_MouseDown(object sender, MouseEventArgs e)
