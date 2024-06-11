@@ -73,6 +73,7 @@
             this.cBoxObjective3 = new System.Windows.Forms.CheckBox();
             this.cBoxObjective4 = new System.Windows.Forms.CheckBox();
             this.cBoxObjective5 = new System.Windows.Forms.CheckBox();
+            this.snipeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnUseObject
@@ -508,12 +509,23 @@
             this.cBoxObjective5.Text = "Objective 5";
             this.cBoxObjective5.UseVisualStyleBackColor = true;
             // 
+            // snipeButton
+            // 
+            this.snipeButton.Location = new System.Drawing.Point(290, 467);
+            this.snipeButton.Name = "snipeButton";
+            this.snipeButton.Size = new System.Drawing.Size(137, 23);
+            this.snipeButton.TabIndex = 101;
+            this.snipeButton.Text = "Snipe";
+            this.snipeButton.UseVisualStyleBackColor = true;
+            this.snipeButton.Click += new System.EventHandler(this.snipeButton_Click);
+            // 
             // Gui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(777, 832);
+            this.Controls.Add(this.snipeButton);
             this.Controls.Add(this.cBoxObjective5);
             this.Controls.Add(this.cBoxObjective4);
             this.Controls.Add(this.cBoxObjective3);
@@ -562,6 +574,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Button snipeButton;
 
         private System.Windows.Forms.CheckBox cBoxObjective5;
 

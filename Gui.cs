@@ -950,6 +950,36 @@ namespace ProfileDevelopment
         }
 
         #endregion EmoteNPC
+
+        #region Snipe Button
+
+        private async void snipeButton_Click(object sender, EventArgs e)
+        {
+            using (Core.Memory.TemporaryCacheState(false))
+            {
+                ObjectManagerUpdate();
+                string str = string.Empty;
+                if (cBoxActiveQuests.SelectedItem is QuestWork q)
+                {
+                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
+                    str += GetToString();
+                    str += $@"      {GetSnipetring(q.Step, q.GlobalId)}
+    </If>";
+                    UpdatePosition();
+                    await Output(str);
+                }
+            }
+        }
+        
+        private static string GetSnipetring(int stepId, int questId)
+        {
+            return
+                $@"<Snipe NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
+        }
+
+        #endregion
+
+
     }
 
     public class ObjectData
