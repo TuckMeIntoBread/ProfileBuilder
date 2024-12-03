@@ -399,12 +399,12 @@ namespace ProfileDevelopment
 
         #region UseObjectString
 
-        private string GetUseObjectString(int stepId, int questId)
+        private string GetUseObjectString(QuestWork q)
         {
             if (_gameObjects == null || _gameObjects.Count == 0)
             {
                 return
-                    $@"<UseObject NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
+                    $@"<UseObject NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" {UseObjectCondition(q)} />";
             }
 
             Dictionary<uint, string> objs = new Dictionary<uint, string>();
@@ -421,7 +421,7 @@ namespace ProfileDevelopment
             if (objs.Count == 1)
             {
                 result =
-                    $@"<UseObject NpcId=""{objs.FirstOrDefault().Key}"" XYZ=""{objs.FirstOrDefault().Value}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
+                    $@"<UseObject NpcId=""{objs.FirstOrDefault().Key}"" XYZ=""{objs.FirstOrDefault().Value}"" {UseObjectCondition(q)} />";
             }
             else if (objs.Count > 1)
             {
@@ -438,7 +438,7 @@ namespace ProfileDevelopment
                 if (withinRadius)
                 {
                     result =
-                        $@"<UseObject NpcIds=""{string.Join(",", objs.Keys.ToArray())}"" XYZ=""{PlayerLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
+                        $@"<UseObject NpcIds=""{string.Join(",", objs.Keys.ToArray())}"" XYZ=""{PlayerLocation}"" {UseObjectCondition(q)}/>";
                 }
                 else
                 {
@@ -450,7 +450,7 @@ namespace ProfileDevelopment
                     }
 
                     result =
-                        $@"<UseObject NpcIds=""{string.Join(",", objs.Keys.ToArray())}"" QuestId=""{questId}"" StepId=""{stepId}"">
+                        $@"<UseObject NpcIds=""{string.Join(",", objs.Keys.ToArray())}"" {UseObjectCondition(q)}>
         <HotSpots>
 {string.Join("", hotSpots).TrimEnd()}
         </HotSpots>
@@ -475,7 +475,7 @@ namespace ProfileDevelopment
                 {
                     str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
-                    str += $@"      {GetUseObjectString(q.Step, q.GlobalId)}
+                    str += $@"      {GetUseObjectString(q)}
     </If>";
                     _gameObjects.Clear();
                     UpdatePosition();
@@ -773,6 +773,22 @@ namespace ProfileDevelopment
 
             return questStepString;
         }
+        
+        private string UseObjectCondition(QuestWork q)
+        {
+            var questStepString = "";
+            if (UseQuestInfo)
+            {
+                GridItem qInfo = pGridQuestData.SelectedGridItem;
+                questStepString += $@"condition=""GetQuestById({q.GlobalId}).{qInfo.PropertyDescriptor.Name} == {qInfo.Value}""";
+            }
+            else
+            {
+                questStepString = $@"QuestId=""{q.GlobalId}"" StepId=""{q.Step}""";
+            }
+
+            return questStepString;
+        }
 
         private async void BtnQuestStep_Click(object sender, EventArgs e)
         {
@@ -896,13 +912,12 @@ namespace ProfileDevelopment
 
             if (IsFlightEnabled && WorldManager.CanFly)
             {
-                if (_lastLocationId != WorldManager.ZoneId)
-                {
+                sb.Append($@"<If condition=""not IsOnMap({ZoneId})"">");
                     sb.Append(TeleportTo);
-                }
+                    sb.Append($@"</If>");
 
                 sb.AppendLine(
-                    $@"        <FlyTo AllowedVariance=""1"" ZoneId=""{ZoneId}"" XYZ=""{PlayerLocation}"" Land=""True""/> ");
+                    $@"        <FlyTo AllowedVariance=""1"" XYZ=""{PlayerLocation}"" Land=""True""/> <!-- ZoneId=""{ZoneId}"" -->");
             }
             else if (MoveToOnly)
             {
@@ -980,6 +995,23 @@ namespace ProfileDevelopment
         #endregion
 
 
+        private async void waitwhileButton_Click(object sender, EventArgs e)
+        {
+            using (Core.Memory.TemporaryCacheState(false))
+            {
+                ObjectManagerUpdate();
+                string str = string.Empty;
+                if (cBoxActiveQuests.SelectedItem is QuestWork q)
+                {
+                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
+                    str += GetToString();
+                    str += $@"      <WaitWhile Condition=""{QuestStepConditionString(q)}""/>
+    </If>";
+                    UpdatePosition();
+                    await Output(str);
+                }
+            }
+        }
     }
 
     public class ObjectData

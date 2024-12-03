@@ -74,6 +74,7 @@
             this.cBoxObjective4 = new System.Windows.Forms.CheckBox();
             this.cBoxObjective5 = new System.Windows.Forms.CheckBox();
             this.snipeButton = new System.Windows.Forms.Button();
+            this.waitwhileButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnUseObject
@@ -407,7 +408,7 @@
             // 
             // btnLisbethJSONEntrance
             // 
-            this.btnLisbethJSONEntrance.Location = new System.Drawing.Point(290, 536);
+            this.btnLisbethJSONEntrance.Location = new System.Drawing.Point(290, 556);
             this.btnLisbethJSONEntrance.Name = "btnLisbethJSONEntrance";
             this.btnLisbethJSONEntrance.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btnLisbethJSONEntrance.Size = new System.Drawing.Size(137, 23);
@@ -418,7 +419,7 @@
             // 
             // btnLisbethJSONExit
             // 
-            this.btnLisbethJSONExit.Location = new System.Drawing.Point(290, 565);
+            this.btnLisbethJSONExit.Location = new System.Drawing.Point(290, 585);
             this.btnLisbethJSONExit.Name = "btnLisbethJSONExit";
             this.btnLisbethJSONExit.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btnLisbethJSONExit.Size = new System.Drawing.Size(137, 23);
@@ -519,12 +520,23 @@
             this.snipeButton.UseVisualStyleBackColor = true;
             this.snipeButton.Click += new System.EventHandler(this.snipeButton_Click);
             // 
+            // waitwhileButton
+            // 
+            this.waitwhileButton.Location = new System.Drawing.Point(290, 496);
+            this.waitwhileButton.Name = "waitwhileButton";
+            this.waitwhileButton.Size = new System.Drawing.Size(137, 23);
+            this.waitwhileButton.TabIndex = 102;
+            this.waitwhileButton.Text = "WaitWhile";
+            this.waitwhileButton.UseVisualStyleBackColor = true;
+            this.waitwhileButton.Click += new System.EventHandler(this.waitwhileButton_Click);
+            // 
             // Gui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(777, 832);
+            this.Controls.Add(this.waitwhileButton);
             this.Controls.Add(this.snipeButton);
             this.Controls.Add(this.cBoxObjective5);
             this.Controls.Add(this.cBoxObjective4);
@@ -574,6 +586,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Button waitwhileButton;
 
         private System.Windows.Forms.Button snipeButton;
 
