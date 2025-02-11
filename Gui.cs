@@ -13,6 +13,7 @@ using ff14bot.Helpers;
 using ff14bot.Managers;
 using ff14bot.Objects;
 using ff14bot.RemoteWindows;
+using Lumina.Excel.Sheets;
 using static Helpers.General;
 
 namespace ProfileDevelopment
@@ -290,9 +291,17 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <!-- {q.Name} -->
-    <If Condition=""not IsQuestCompleted({q.GlobalId})"">
-      <If Condition=""not HasQuest({q.GlobalId})"">" + "\n";
+                    str = $@"    <!-- {q.Name} -->";
+                    if (PreviousQuestString((uint)q.GlobalId) != null)
+                    {
+                        str += $@"    <If Condition=""{PreviousQuestString((uint)q.GlobalId)} and not IsQuestCompleted({q.GlobalId})"">" + "\n";
+                    }
+                    else
+                    {
+                        str += $@"    <If Condition=""not IsQuestCompleted({q.GlobalId})"">" + "\n";
+            
+                    }
+                    str = $@"<If Condition=""not HasQuest({q.GlobalId})"">" + "\n";
                     str += GetToString();
                     str += $@"        <If Condition=""IsQuestAcceptQualified({q.GlobalId})"">
           <PickupQuest QuestId=""{q.GlobalId}"" NpcId=""{Core.Target.NpcId}""/>
@@ -899,6 +908,74 @@ namespace ProfileDevelopment
             sb.Append("  " + NonLisbethMoveString());
             sb.AppendLine(@"      </If>");
             return sb.ToString();
+        }
+        
+        static Dictionary<uint, uint> questDictionary;
+
+        static void Main(string[] args)
+        {
+            var lumina = new Lumina.GameData("C:\\Program Files (x86)\\SquareEnix\\FINAL FANTASY XIV - A Realm Reborn\\game\\sqpack");
+            var sheet = lumina.GetExcelSheet<Quest>();
+
+            questDictionary = BuildQuestDictionary(sheet);
+
+            Console.Write("Enter Quest ID: ");
+            if (uint.TryParse(Console.ReadLine(), out uint questId))
+            {
+                uint? previousQuestId = GetPreviousQuestId(questId);
+                if (previousQuestId.HasValue)
+                {
+                    Console.WriteLine($"Previous Quest ID: {previousQuestId.Value}");
+                }
+                else
+                {
+                    Console.WriteLine("No previous quest found for the given Quest ID.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a valid numeric Quest ID.");
+            }
+        }
+
+        static Dictionary<uint, uint> BuildQuestDictionary(IEnumerable<Quest> sheet)
+        {
+            var dic = new Dictionary<uint, uint>();
+            foreach (var item in sheet)
+            {
+                var previous = item.PreviousQuest;
+                if (previous.Count > 0)
+                {
+                    foreach (var q in item.PreviousQuest)
+                    {
+                        if (q.IsValid)
+                        {
+                            dic[item.RowId] = q.RowId;
+                        }
+                    }
+                }
+            }
+            return dic;
+        }
+
+        static uint? GetPreviousQuestId(uint questId)
+        {
+            return questDictionary.TryGetValue(questId, out uint previousQuestId) ? previousQuestId : (uint?)null;
+        }
+        
+        private string PreviousQuestString(uint questId)
+        {
+            if (GetPreviousQuestId(questId) != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine(@"IsQuestCompleted(" + GetPreviousQuestId(questId) + ")");
+                return sb.ToString();
+                
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private string NonLisbethMoveString()
