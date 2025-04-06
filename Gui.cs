@@ -230,8 +230,7 @@ namespace ProfileDevelopment
                         .Name;
 
                     return
-                        $@"    <TeleportTo Name=""{_closestAetheryteName}"" AetheryteId=""{_closestAetheryteId}""/>" +
-                        "\n";
+                        $@"			<TeleportTo Name=""{_closestAetheryteName}"" AetheryteId=""{_closestAetheryteId}""/>";
                 }
                 catch
                 {
@@ -340,7 +339,7 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"      <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
+                    str = $@"	  <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
                     str +=
                         $@"        <TalkTo NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
@@ -365,7 +364,7 @@ namespace ProfileDevelopment
                 {
                     str += GetToString();
                     str +=
-                        $@"  <UseTransport NpcId=""{Core.Target.NpcId}"" InteractDistance=""3.0"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}""/>";
+                        $@"		<UseTransport NpcId=""{Core.Target.NpcId}"" InteractDistance=""3.0"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}""/>";
                 }
 
                 await Output(str);
@@ -384,11 +383,11 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
+                    str = $@"      <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
                     str +=
-                        $@"      <HandOver{ItemIdString}NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
-    </If>";
+                        $@"		<HandOver{ItemIdString}NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
+      </If>";
                     UpdatePosition();
                     await Output(str);
                 }
@@ -404,7 +403,7 @@ namespace ProfileDevelopment
             if (_gameObjects == null || _gameObjects.Count == 0)
             {
                 return
-                    $@"<UseObject NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" {UseObjectCondition(q)} />";
+                    $@"  <UseObject NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" {UseObjectCondition(q)} />";
             }
 
             Dictionary<uint, string> objs = new Dictionary<uint, string>();
@@ -421,7 +420,7 @@ namespace ProfileDevelopment
             if (objs.Count == 1)
             {
                 result =
-                    $@"<UseObject NpcId=""{objs.FirstOrDefault().Key}"" XYZ=""{objs.FirstOrDefault().Value}"" {UseObjectCondition(q)} />";
+                    $@"	<UseObject NpcId=""{objs.FirstOrDefault().Key}"" XYZ=""{objs.FirstOrDefault().Value}"" {UseObjectCondition(q)} />";
             }
             else if (objs.Count > 1)
             {
@@ -473,10 +472,10 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
+                    str = $@"		  <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
                     str += $@"      {GetUseObjectString(q)}
-    </If>";
+      </If>";
                     _gameObjects.Clear();
                     UpdatePosition();
                     await Output(str);
@@ -494,7 +493,7 @@ namespace ProfileDevelopment
       <Hotspots>
         <Hotspot Radius=""200"" XYZ=""");
             sb.Append(Core.Me.Location.ToString().Trim('<', '>'));
-            sb.Append(@""" name=""Name""/>
+            sb.Append(@"""/>
       </Hotspots>
       <TargetMobs>" + "\r\n");
             foreach(var unit in units.OrderBy(r=>r.Distance()))
@@ -522,10 +521,10 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
+                    str = $@"      <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
-                    str += $@"<Grind grindRef=""{q.GlobalId}"" while=""GetQuestStep({q.GlobalId}) == {q.Step}"" />
-    </If>" + "\n";
+                    str += $@"		<Grind grindRef=""{q.GlobalId}"" while=""GetQuestStep({q.GlobalId}) == {q.Step}""/>
+      </If>" + "\n";
                     str += $@"{GetGrindAreaString(q.Step, q.GlobalId)}";
                     _gameObjects.Clear();
                     UpdatePosition();
@@ -608,11 +607,11 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
+                    str = $@"      <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
-                    str += $@"      {GetUseItemString(q.Step, q.GlobalId)}
-    </If>";
-                    _gameObjects.Clear();
+                    str +=
+                        $@"		<UseItem{ItemIdString}NpcId=""{Core.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{q.GlobalId}"" StepId=""{q.Step}""/>
+      </If>";
                     UpdatePosition();
                     await Output(str);
                 }
@@ -810,7 +809,7 @@ namespace ProfileDevelopment
             {
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    string str = $@"    <If Condition=""GetQuestStep({q.GlobalId}) &gt; 0"">" + "\n";
+                    string str = $@"	  <If Condition=""GetQuestStep({q.GlobalId}) &gt; 0"">" + "\n";
                     await Output(str);
                 }
             }
@@ -912,12 +911,10 @@ namespace ProfileDevelopment
 
             if (IsFlightEnabled && WorldManager.CanFly)
             {
-                sb.Append($@"<If condition=""not IsOnMap({ZoneId})"">");
-                    sb.Append(TeleportTo);
-                    sb.Append($@"</If>");
-
-                sb.AppendLine(
-                    $@"        <FlyTo AllowedVariance=""1"" XYZ=""{PlayerLocation}"" Land=""True""/> <!-- ZoneId=""{ZoneId}"" -->");
+                sb.AppendLine($@"		<If condition=""not IsOnMap({ZoneId})"">");
+                sb.AppendLine(TeleportTo);
+                sb.AppendLine($@"		</If>");
+                sb.AppendLine($@"		<FlyTo AllowedVariance=""1"" XYZ=""{PlayerLocation}"" Land=""True""/> <!-- ZoneId=""{ZoneId}"" -->");
             }
             else if (MoveToOnly)
             {
@@ -946,10 +943,10 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
+                    str = $@"      <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
                     str += $@"      {GetEmoteNPCString(q.Step, q.GlobalId)}
-    </If>";
+      </If>";
                     UpdatePosition();
                     await Output(str);
                 }
@@ -961,7 +958,7 @@ namespace ProfileDevelopment
             string emote = "greet"; // TODO: Make selectable instead of post-editing XML file
 
             return
-                $@"<EmoteNPC Emote=""{emote}"" NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
+                $@"  <EmoteNPC Emote=""{emote}"" NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
         }
 
         #endregion EmoteNPC
@@ -976,10 +973,10 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
+                    str = $@"      <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
                     str += $@"      {GetSnipetring(q.Step, q.GlobalId)}
-    </If>";
+      </If>";
                     UpdatePosition();
                     await Output(str);
                 }
@@ -989,7 +986,7 @@ namespace ProfileDevelopment
         private static string GetSnipetring(int stepId, int questId)
         {
             return
-                $@"<Snipe NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
+                $@"  <Snipe NpcId=""{GameObjectManager.Target.NpcId}"" XYZ=""{TargetLocation}"" QuestId=""{questId}"" StepId=""{stepId}""/>";
         }
 
         #endregion
@@ -1003,10 +1000,10 @@ namespace ProfileDevelopment
                 string str = string.Empty;
                 if (cBoxActiveQuests.SelectedItem is QuestWork q)
                 {
-                    str = $@"    <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
+                    str = $@"      <If Condition=""{QuestStepConditionString(q)}"">" + "\n";
                     str += GetToString();
-                    str += $@"      <WaitWhile Condition=""{QuestStepConditionString(q)}""/>
-    </If>";
+                    str += $@"		<WaitWhile Condition=""{QuestStepConditionString(q)}""/>
+      </If>";
                     UpdatePosition();
                     await Output(str);
                 }
